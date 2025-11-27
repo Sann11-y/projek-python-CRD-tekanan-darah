@@ -2,13 +2,12 @@ import os
 import CRD 
 from google import genai
 import dotenv
-
 dotenv.load_dotenv('GeminiApi.env')
 client = None
 try:
     client = genai.Client()
 except Exception as e:
-    print(f'Eror API KEYS gagal dimuat atau tidak valid. \n Detail: {e}')
+    print(f'Eror API KEYS gagal dimuat atau tidak valid. \n Detail: {e}')
 if __name__ == "__main__":
     sistem_operasi = os.name
 
@@ -49,5 +48,3 @@ if __name__ == "__main__":
             break
 
     print("Program Berakhir, Terima Kasiih KAKAAAAAA!!!") 
-
-    anjing
