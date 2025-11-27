@@ -48,4 +48,6 @@ if __name__ == "__main__":
         if is_done == "y" or is_done == "Y":
             break
 
-    print("Program Berakhir, Terima Kasiih KAKAAAAAA!!!") woi
+    print("Program Berakhir, Terima Kasiih KAKAAAAAA!!!") 
+
+    anjing
