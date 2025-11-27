@@ -1,7 +1,6 @@
 import os
-import CRUD as CRUD
+import CRD 
 from google import genai
-import os
 import dotenv
 
 dotenv.load_dotenv('GeminiApi.env')
@@ -49,4 +48,4 @@ if __name__ == "__main__":
         if is_done == "y" or is_done == "Y":
             break
 
-    print("Program Berakhir, Terima Kasiih KAKAAAAA")
+    print("Program Berakhir, Terima Kasiih KAKAAAAAA!!!")
