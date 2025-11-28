@@ -1,8 +1,8 @@
-from . import Operasi
+from . import operasi
 from .util import faktorPemicu, saranKesehatan
 
 def analisis_console():
-    data_file = Operasi.read()
+    data_file = operasi.read()
     if not data_file:
         print("Tidak ada data yang ditemukan")
         return
@@ -12,7 +12,7 @@ def analisis_console():
         print("Silahkan pilih nomor data untuk analisis kesehatan")
         try:
             no_data = int(input("Nomor Data: "))
-            data_pasien = Operasi.read(index=no_data)
+            data_pasien = operasi.read(index=no_data)
 
             if data_pasien:
                 break
@@ -43,7 +43,7 @@ def analisis_console():
     input("\nTekan Enter untuk melanjutkan...")
 
 def delete_console():
-    data_file = Operasi.read()
+    data_file = operasi.read()
     if not data_file:
         print("Tidak ada data yang ditemukan")
         return
@@ -53,7 +53,7 @@ def delete_console():
         print("Silahkan pilih nomor data yang akan di delete")
         try:
             no_data = int(input("Nomor Data: "))
-            data_pasien = Operasi.read(index=no_data)
+            data_pasien = operasi.read(index=no_data)
 
             if data_pasien:
                 data_break = data_pasien.split(',')
@@ -74,7 +74,7 @@ def delete_console():
                 print(f"5. Diagnosa\t: {diagnosa:.40}")
                 is_done = input("Apakah anda yakin (y/n)? ")
                 if is_done.lower() == "y":
-                    Operasi.delete(no_data)
+                    operasi.delete(no_data)
                     break
             else:
                 print("nomor tidak valid, silahkan masukan lagi")
@@ -120,12 +120,12 @@ def create_console():
         except:
             print("Diastolic harus angka")
 
-    Operasi.create(nama,umur,systolic,diastolic)
+    operasi.create(nama,umur,systolic,diastolic)
     print("\nBerikut adalah data baru anda")
     read_console()
 
 def read_console():
-    data_file = Operasi.read()
+    data_file = operasi.read()
     
     if not data_file:
         print("Tidak ada data yang ditemukan")

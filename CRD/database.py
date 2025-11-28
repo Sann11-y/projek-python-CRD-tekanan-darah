@@ -1,4 +1,4 @@
-from . import Operasi
+from . import operasi
 
 DB_NAME = "data.txt"
 TEMPLATE = {
@@ -17,4 +17,4 @@ def init_console():
             print("Database tersedia, init done!")
     except:
         print("Database tidak ditemukan, silahkan membuat database baru")
-        Operasi.create_first_data()
+        operasi.create_first_data()
