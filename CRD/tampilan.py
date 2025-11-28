@@ -23,15 +23,19 @@ def analisis_console():
     
     data_break = data_pasien.split(',')
     nama = data_break[2].strip()
-    umur = data_break[3].strip()
-    systolic = data_break[4].strip()
-    diastolic = data_break[5].strip()
-    diagnosa = data_break[6].strip()
+    bb = data_break[3].strip()
+    tb = data_break[4].strip()
+    umur = data_break[5].strip()
+    systolic = data_break[6].strip()
+    diastolic = data_break[7].strip()
+    diagnosa = data_break[8].strip()
     
     print("\n"+"="*80)
     print("ANALISIS KESEHATAN TEKANAN DARAH")
     print("="*80)
     print(f"Nama Pasien\t: {nama}")
+    print(f"Berat Badan\t: {bb} kg")
+    print(f"Tinggi Badan\t: {tb} cm")
     print(f"Umur\t\t: {umur} tahun")
     print(f"Tekanan Darah\t: {systolic}/{diastolic} mmHg")
     print(f"Diagnosa\t: {diagnosa}")
@@ -60,18 +64,21 @@ def delete_console():
                 pk = data_break[0]
                 data_add = data_break[1]
                 nama = data_break[2]
-                umur = data_break[3]
-                systolic = data_break[4]
-                diastolic = data_break[5]
-                diagnosa = data_break[6][:-1]
-
+                bb = data_break[3]
+                tb = data_break[4]
+                umur = data_break[5]
+                systolic = data_break[6]
+                diastolic = data_break[7]
+                diagnosa = data_break[8][:-1]
+                
                 print("\n"+"="*80)
                 print("Data yang ingin anda Hapus")
                 print(f"1. Nama\t\t: {nama:.40}")
-                print(f"2. Umur\t\t: {umur:3}")
-                print(f"3. Systolic\t: {systolic:3}")
-                print(f"4. Diastolic\t: {diastolic:3}")
-                print(f"5. Diagnosa\t: {diagnosa:.40}")
+                print(f"2. Berat Badan\t: {bb:12}")
+                print(f"3. Tinggi Badan\t: {tb:12}")
+                print(f"4. Systolic\t: {systolic:3}")
+                print(f"5. Diastolic\t: {diastolic:3}")
+                print(f"6. Diagnosa\t: {diagnosa:.40}")
                 is_done = input("Apakah anda yakin (y/n)? ")
                 if is_done.lower() == "y":
                     operasi.delete(no_data)
@@ -100,18 +107,7 @@ def create_console():
                 print("Berat badan dan tinggi badan harus lebih dari 0")
         except:
             print("Berat badan dan tinggi badan harus angka")
-    bmi = bb/((tb/100)**2)
-    print(f"Indeks Massa Tubuh (BMI) Anda: {bmi:.2f}")
-    if bmi < 18.5:
-        print("Kategori: Kekurangan Berat Badan")
-    elif bmi >= 18.5 and bmi <= 24.9:
-        print("Kategori: Normal")
-    elif bmi >= 25 and bmi <= 29.9:
-        print("Kategori: Kelebihan Berat Badan")
-    else:
-        print("Kategori: Obesitas")
-    print("="*80)
-    print("\n")
+    
     
 
 
@@ -146,7 +142,7 @@ def create_console():
             print("Diastolic harus angka")
 
 
-    operasi.create(nama,umur,systolic,diastolic)
+    operasi.create(nama,bb,tb,umur,systolic,diastolic)
     print("\nBerikut adalah data baru anda")
     read_console()
 
@@ -159,22 +155,26 @@ def read_console():
 
     no = "No"
     nama = "Nama Pasien"
+    bb = "Berat Badan"
+    tb = "Tinggi Badan"
     umur = "Umur"
     systolic = "Systolic"
     diastolic = "Diastolic"
     diagnosa = "Diagnosa"
 
     print("\n"+"="*100)
-    print(f"{no:4} | {nama:20} | {umur:4} | {systolic:8} | {diastolic:9} | {diagnosa:15}")
+    print(f"{no:4} | {nama:20} | {bb:12} | {tb:12} | {umur:4} | {systolic:8} | {diastolic:9} | {diagnosa:15}")
     print("-"*100)
     
     for index,data in enumerate(data_file):
         data_break = data.split(",")
         nama = data_break[2].strip()
-        umur = data_break[3].strip()
-        systolic = data_break[4].strip()
-        diastolic = data_break[5].strip()
-        diagnosa = data_break[6].strip()
-        print(f"{index+1:4} | {nama:20.20} | {umur:4} | {systolic:8} | {diastolic:9} | {diagnosa:15.15}")
+        bb = data_break[3].strip()
+        tb = data_break[4].strip()
+        umur = data_break[5].strip()
+        systolic = data_break[6].strip()
+        diastolic = data_break[7].strip()
+        diagnosa = data_break[8].strip()
+        print(f"{index+1:4} | {nama:20.20} | {bb:12} | {tb:12} | {umur:4} | {systolic:8} | {diastolic:9} | {diagnosa:15.15}")
 
     print("="*100+"\n")

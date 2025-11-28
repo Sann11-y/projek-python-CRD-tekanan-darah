@@ -29,8 +29,8 @@ def delete(no_data):
             os.remove("data_temp.txt")
 
 
-def create(nama,umur,systolic,diastolic):
-    diagnosa = klasifikasi_tekanan(int(umur),int(systolic),int(diastolic))
+def create(nama,bb,tb,umur,systolic,diastolic):
+    diagnosa = klasifikasi_tekanan(int(bb),int(tb),int(umur),int(systolic),int(diastolic))
     
     data = database.TEMPLATE.copy()
 
@@ -44,7 +44,7 @@ def create(nama,umur,systolic,diastolic):
     data["diastolic"] = str(diastolic)
     data["diagnosa"] = diagnosa + database.TEMPLATE["diagnosa"][len(diagnosa):]
 
-    data_str = f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["umur"]},{data["systolic"]},{data["diastolic"]},{data["diagnosa"]}\n'
+    data_str = f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["Berat Badan"]},{data["Tinggi Badan"]},{data["umur"]},{data["systolic"]},{data["diastolic"]},{data["diagnosa"]}\n'
     
     try:
         with open(database.DB_NAME,'a',encoding="utf-8") as file:
@@ -93,12 +93,14 @@ def create_first_data():
     data["pk"] = random_string(6)
     data["date_add"] = time.strftime("%Y-%m-%d-%H-%M-%S%z",time.gmtime())
     data["nama"] = nama + database.TEMPLATE["nama"][len(nama):]
+    data["Berat Badan"] = database.TEMPLATE["Berat Badan"]
+    data["Tinggi Badan"] = database.TEMPLATE["Tinggi Badan"]
     data["umur"] = str(umur)
     data["systolic"] = str(systolic)
     data["diastolic"] = str(diastolic)
     data["diagnosa"] = diagnosa + database.TEMPLATE["diagnosa"][len(diagnosa):]
 
-    data_str = f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["umur"]},{data["systolic"]},{data["diastolic"]},{data["diagnosa"]}\n'
+    data_str = f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["Berat Badan"]},{data["Tinggi Badan"]},{data["umur"]},{data["systolic"]},{data["diastolic"]},{data["diagnosa"]}\n'
     
     try:
         with open(database.DB_NAME,'w',encoding="utf-8") as file:
