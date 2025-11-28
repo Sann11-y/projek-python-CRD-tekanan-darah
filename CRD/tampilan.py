@@ -92,6 +92,31 @@ def create_console():
     
     while True:
         try:
+            bb=float(input("Berat Badan (kg)\t: "))
+            tb=float(input("Tinggi Badan (cm)\t: "))
+            if bb > 0 and tb > 0:
+                break
+            else:
+                print("Berat badan dan tinggi badan harus lebih dari 0")
+        except:
+            print("Berat badan dan tinggi badan harus angka")
+    bmi = bb/((tb/100)**2)
+    print(f"Indeks Massa Tubuh (BMI) Anda: {bmi:.2f}")
+    if bmi < 18.5:
+        print("Kategori: Kekurangan Berat Badan")
+    elif bmi >= 18.5 and bmi <= 24.9:
+        print("Kategori: Normal")
+    elif bmi >= 25 and bmi <= 29.9:
+        print("Kategori: Kelebihan Berat Badan")
+    else:
+        print("Kategori: Obesitas")
+    print("="*80)
+    print("\n")
+    
+
+
+    while True:
+        try:
             umur = int(input("Umur\t\t: "))
             if umur > 0:
                 break
@@ -119,6 +144,7 @@ def create_console():
                 print("Diastolic harus lebih dari 0")
         except:
             print("Diastolic harus angka")
+
 
     operasi.create(nama,umur,systolic,diastolic)
     print("\nBerikut adalah data baru anda")

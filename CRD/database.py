@@ -5,6 +5,8 @@ TEMPLATE = {
     "pk":"XXXXXX",
     "date_add":"yyyy-mm-dd",
     "nama":255*" ",
+    "Berat Badan":"yyy",
+    "Tinggi Badan":"yyy",
     "umur":"yyy",
     "systolic":"yyy", 
     "diastolic":"yyy",
