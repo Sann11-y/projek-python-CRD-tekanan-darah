@@ -1,5 +1,5 @@
 from . import Operasi
-from .Util import faktorPemicu, saranKesehatan
+from .util import faktorPemicu, saranKesehatan
 
 def analisis_console():
     data_file = Operasi.read()
@@ -83,95 +83,7 @@ def delete_console():
 
     print("Data berhasil di hapus")
 
-def update_console():
-    data_file = Operasi.read()
-    if not data_file:
-        print("Tidak ada data yang ditemukan")
-        return
-        
-    read_console()
-    while(True):
-        print("Silahkan pilih nomor data yang akan di update")
-        try:
-            no_data = int(input("Nomor Data: "))
-            data_pasien = Operasi.read(index=no_data)
 
-            if data_pasien:
-                break
-            else:
-                print("nomor tidak valid, silahkan masukan lagi")
-        except:
-            print("Input harus angka")
-    
-    data_break = data_pasien.split(',')
-    pk = data_break[0]
-    data_add = data_break[1]
-    nama = data_break[2]
-    umur = data_break[3]
-    systolic = data_break[4]
-    diastolic = data_break[5]
-    diagnosa = data_break[6][:-1]
-    
-    while(True):
-        print("\n"+"="*80)
-        print("Silahkan pilih data apa yang ingin anda ubah")
-        print(f"1. Nama\t\t: {nama:.40}")
-        print(f"2. Umur\t\t: {umur:3}")
-        print(f"3. Systolic\t: {systolic:3}")
-        print(f"4. Diastolic\t: {diastolic:3}")
-
-        user_option = input("Pilih data [1,2,3,4]: ")
-        print("\n"+"="*80)
-        if user_option == "1": 
-            nama = input("Nama\t: ")
-        elif user_option == "2": 
-            while True:
-                try:
-                    umur = int(input("Umur\t: "))
-                    if umur > 0:
-                        break
-                    else:
-                        print("Umur harus lebih dari 0")
-                except:
-                    print("Umur harus angka")
-        elif user_option == "3": 
-            while True:
-                try:
-                    systolic = int(input("Systolic\t: "))
-                    if systolic > 0:
-                        break
-                    else:
-                        print("Systolic harus lebih dari 0")
-                except:
-                    print("Systolic harus angka")
-        elif user_option == "4": 
-            while True:
-                try:
-                    diastolic = int(input("Diastolic\t: "))
-                    if diastolic > 0:
-                        break
-                    else:
-                        print("Diastolic harus lebih dari 0")
-                except:
-                    print("Diastolic harus angka")
-        else: 
-            print("Pilihan tidak sesuai")
-
-        from .Util import klasifikasi_tekanan
-        diagnosa = klasifikasi_tekanan(int(umur),int(systolic),int(diastolic))
-        
-        print("\nData baru anda")
-        print(f"1. Nama\t\t: {nama:.40}")
-        print(f"2. Umur\t\t: {umur:3}")
-        print(f"3. Systolic\t: {systolic:3}")
-        print(f"4. Diastolic\t: {diastolic:3}")
-        print(f"5. Diagnosa\t: {diagnosa:.40}")
-        
-        is_done = input("Apakah data sudah sesuai(y/n)? ")
-        if is_done.lower() == "y":
-            break
-    
-    Operasi.update(no_data,pk,data_add,nama,umur,systolic,diastolic,diagnosa)
 
 def create_console():
     print("\n\n"+"="*80)

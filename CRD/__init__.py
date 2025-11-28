@@ -1,2 +1,2 @@
-from .Database import init_console
-from .View import read_console, create_console,  delete_console, analisis_console
+from .database import init_console
+from .tampilan import read_console, create_console,  delete_console, analisis_console
