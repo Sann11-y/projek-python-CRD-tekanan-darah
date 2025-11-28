@@ -20,3 +20,4 @@ def init_console():
     except:
         print("Database tidak ditemukan, silahkan membuat database baru")
         operasi.create_first_data()
+#cihuyyyy
