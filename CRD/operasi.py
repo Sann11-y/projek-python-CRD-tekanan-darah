@@ -30,15 +30,17 @@ def delete(no_data):
 
 
 def create(nama,bb,tb,umur,systolic,diastolic):
-    diagnosa = klasifikasi_tekanan(int(bb),int(tb),int(umur),int(systolic),int(diastolic))
+    diagnosa = klasifikasi_tekanan(int(umur),int(systolic),int(diastolic))
     
     data = database.TEMPLATE.copy()
 
     data["pk"] = random_string(6)
     data["date_add"] = time.strftime("%Y-%m-%d-%H-%M-%S%z",time.gmtime())
     data["nama"] = nama + database.TEMPLATE["nama"][len(nama):]
-    data["Berat Badan"] = database.TEMPLATE["Berat Badan"]
-    data["Tinggi Badan"] = database.TEMPLATE["Tinggi Badan"]
+    bb_str=str(bb)
+    tb_str=str(tb)
+    data["Berat Badan"] = bb_str+database.TEMPLATE["Berat Badan"]
+    data["Tinggi Badan"] = tb_str+database.TEMPLATE["Tinggi Badan"]
     data["umur"] = str(umur)
     data["systolic"] = str(systolic)
     data["diastolic"] = str(diastolic)
