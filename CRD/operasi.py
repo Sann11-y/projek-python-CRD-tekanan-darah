@@ -37,6 +37,8 @@ def create(nama,umur,systolic,diastolic):
     data["pk"] = random_string(6)
     data["date_add"] = time.strftime("%Y-%m-%d-%H-%M-%S%z",time.gmtime())
     data["nama"] = nama + database.TEMPLATE["nama"][len(nama):]
+    data["Berat Badan"] = database.TEMPLATE["Berat Badan"]
+    data["Tinggi Badan"] = database.TEMPLATE["Tinggi Badan"]
     data["umur"] = str(umur)
     data["systolic"] = str(systolic)
     data["diastolic"] = str(diastolic)
