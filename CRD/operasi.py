@@ -18,10 +18,15 @@ def delete(no_data):
                     with open("data_temp.txt",'a',encoding="utf-8") as temp_file:
                         temp_file.write(content)
                 counter += 1
-    except:
-        print("database error")
-    
-    os.rename("data_temp.txt",database.DB_NAME)
+        
+        # Hapus file lama dan rename file temp
+        os.remove(database.DB_NAME)
+        os.rename("data_temp.txt", database.DB_NAME)
+    except Exception as e:
+        print(f"database error: {e}")
+        # Hapus file temp jika ada error
+        if os.path.exists("data_temp.txt"):
+            os.remove("data_temp.txt")
 
 
 def create(nama,umur,systolic,diastolic):
