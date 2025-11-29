@@ -3,7 +3,7 @@ from .util import saran_kesehatan
 import pandas as pd
 
 def create_console():
-    """Create new patient"""
+    """Create new patient console"""
     print("\n" + "="*50)
     print("TAMBAH DATA PASIEN")
     print("="*50)
@@ -37,32 +37,32 @@ def create_console():
 
     while True:
         try:
-            systolic = int(input("Tekanan Darah (Systolic)\t: "))
-            diastolic = int(input("Tekanan Darah (Diastolic)\t: "))
-            if systolic <= 0 or diastolic <= 0:
+            sistol = int(input("Tekanan Darah (Systolic)\t: "))
+            diastol = int(input("Tekanan Darah (Diastolic)\t: "))
+            if sistol <= 0 or diastol <= 0:
                 print("❌ Error: Semua nilai harus positif!")
                 continue
-            elif systolic < diastolic:
+            elif sistol < diastol:
                 print("❌ Error: Systolic harus lebih besar dari Diastolic!")
                 continue
-            elif systolic == diastolic:
+            elif sistol == diastol:
                 print("❌ Error: Systolic dan Diastolic tidak boleh sama!")
                 continue
-            elif systolic < 50 or diastolic < 30 or systolic > 300 or diastolic > 200:
-                print("❌ Error: Tekanan darah terlalu ekstrem dan di luar rentang fisiologis normal.")
+            elif sistol < 50 or diastol < 30 or sistol > 300 or diastol > 200:
+                print("❌ Error: Tekanan darah terlalu ekstrem!")
                 continue
-            elif systolic - diastolic <= 20:
-                print("❌ Error: Tekanan Nadi (Pulse Pressure) sangat sempit. Input tidak biasa.")
+            elif sistol - diastol <= 20:
+                print("❌ Error: Tekanan Nadi sangat sempit!")
                 continue 
-            elif systolic - diastolic >= 60:
-                print("❌ Error: Tekanan Nadi (Pulse Pressure) sangat lebar. Input tidak biasa.")
+            elif sistol - diastol >= 60:
+                print("❌ Error: Tekanan Nadi sangat lebar!")
                 continue
             else:
                 break
         except ValueError:
             print("❌ Error: Input harus angka!")
     
-    if operasi.create(nama, bb, tb, umur, systolic, diastolic):
+    if operasi.create(nama, bb, tb, umur, sistol, diastol):
         print("\n✅ Data berhasil ditambahkan!")
         df = database.get_all_data()
         print(f"📊 Total data sekarang: {len(df)} pasien")
@@ -72,7 +72,7 @@ def create_console():
     input("\nTekan Enter untuk lanjut...")
 
 def read_console():
-    """Display all patients from DataFrame"""
+    """Display all patients console"""
     df = database.get_all_data()
     
     if len(df) == 0:
@@ -85,24 +85,23 @@ def read_console():
     print(f"{'No':3} | {'Nama':20} | {'BB(kg)':6} | {'TB(cm)':6} | {'BMI':5} | {'Umur':4} | {'Tekanan':12} | {'Diagnosa':12} | {'Kategori BMI':12}")
     print("-"*100)
     
-    # Loop through DataFrame rows
-    for index, row in df.iterrows():
-        nama = str(row['nama'])[:20]  # Limit to 20 chars
-        bb = f"{row['berat_badan']:.1f}"
-        tb = f"{row['tinggi_badan']:.1f}"
-        bmi = f"{row['bmi']:.1f}"
-        umur = str(int(row['umur']))
-        tekanan_darah = f"{int(row['systolic'])}/{int(row['diastolic'])} mmHg"
-        diagnosa = str(row['diagnosa'])[:12]  # Limit to 12 chars
-        kategori_bmi = str(row['kategori_bmi'])[:12]  # Limit to 12 chars
+    for indeks, baris in df.iterrows():
+        nama = str(baris['nama'])[:20]
+        bb = f"{baris['berat_badan']:.1f}"
+        tb = f"{baris['tinggi_badan']:.1f}"
+        bmi = f"{baris['bmi']:.1f}"
+        umur = str(int(baris['umur']))
+        tekanan_darah = f"{int(baris['sistol'])}/{int(baris['diastol'])} mmHg"
+        diagnosa = str(baris['diagnosa'])[:12]
+        kategori_bmi = str(baris['kategori_bmi'])[:12]
         
-        print(f"{index+1:3} | {nama:20} | {bb:6} | {tb:6} | {bmi:5} | {umur:4} | {tekanan_darah:12} | {diagnosa:12} | {kategori_bmi:12}")
+        print(f"{indeks+1:3} | {nama:20} | {bb:6} | {tb:6} | {bmi:5} | {umur:4} | {tekanan_darah:12} | {diagnosa:12} | {kategori_bmi:12}")
 
     print("="*100)
     print(f"📈 Total: {len(df)} pasien")
 
 def analisis_console():
-    """Analyze patient health"""
+    """Analyze patient health console"""
     df = database.get_all_data()
     
     if len(df) == 0:
@@ -114,8 +113,8 @@ def analisis_console():
     
     while True:
         try:
-            no_data = int(input("\n🔍 Pilih nomor data untuk dianalisis: ")) - 1
-            data_pasien = operasi.read(no_data)
+            nomor_data = int(input("\n🔍 Pilih nomor data untuk dianalisis: ")) - 1
+            data_pasien = operasi.read(nomor_data)
             
             if data_pasien is not None:
                 break
@@ -124,7 +123,6 @@ def analisis_console():
         except ValueError:
             print("❌ Input harus angka!")
     
-    # Data langsung dari dictionary
     print("\n" + "="*60)
     print("HASIL ANALISIS KESEHATAN")
     print("="*60)
@@ -132,7 +130,7 @@ def analisis_console():
     print(f"🎂 Umur\t\t: {int(data_pasien['umur'])} tahun") 
     print(f"⚖️  Berat/Tinggi\t: {data_pasien['berat_badan']} kg / {data_pasien['tinggi_badan']} cm")
     print(f"📊 BMI\t\t: {data_pasien['bmi']:.1f}")
-    print(f"💓 Tekanan Darah\t: {int(data_pasien['systolic'])}/{int(data_pasien['diastolic'])} mmHg")
+    print(f"💓 Tekanan Darah\t: {int(data_pasien['sistol'])}/{int(data_pasien['diastol'])} mmHg")
     print(f"🏥 Diagnosa\t: {data_pasien['diagnosa']}")
     
     saran_tekanan, saran_bmi = saran_kesehatan(data_pasien['diagnosa'], data_pasien['bmi'])
@@ -145,7 +143,7 @@ def analisis_console():
     input("\nTekan Enter untuk lanjut...")
 
 def delete_console():
-    """Delete patient record"""
+    """Delete patient record console"""
     df = database.get_all_data()
     
     if len(df) == 0:
@@ -157,8 +155,8 @@ def delete_console():
     
     while True:
         try:
-            no_data = int(input("\n🗑️  Pilih nomor data yang akan dihapus: ")) - 1
-            data_pasien = operasi.read(no_data)
+            nomor_data = int(input("\n🗑️  Pilih nomor data yang akan dihapus: ")) - 1
+            data_pasien = operasi.read(nomor_data)
             
             if data_pasien is not None:
                 break
@@ -172,12 +170,12 @@ def delete_console():
     print(f"\n⚠️  KONFIRMASI PENGHAPUSAN")
     print(f"Data yang akan dihapus: {nama}")
     print(f"Umur: {int(data_pasien['umur'])} tahun")
-    print(f"Tekanan Darah: {int(data_pasien['systolic'])}/{int(data_pasien['diastolic'])} mmHg")
+    print(f"Tekanan Darah: {int(data_pasien['sistol'])}/{int(data_pasien['diastol'])} mmHg")
     
-    confirm = input("\nApakah Anda yakin? (y/n): ").lower()
+    konfirmasi = input("\nApakah Anda yakin? (y/n): ").lower()
     
-    if confirm == 'y':
-        if operasi.delete(no_data):
+    if konfirmasi == 'y':
+        if operasi.delete(nomor_data):
             print("✅ Data berhasil dihapus!")
             df = database.get_all_data()
             print(f"📊 Sisa data: {len(df)} pasien")

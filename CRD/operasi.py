@@ -1,53 +1,47 @@
 from . import database
-from .util import random_string, bmi_klasifikasi, klasifikasi_tekanan
-import time
+from .util import klasifikasi_bmi, klasifikasi_tekanan
 
-def create(nama, bb, tb, umur, systolic, diastolic):
-    """Create new patient record in memory"""
+def create(nama, bb, tb, umur, sistol, diastol):
+    """Create new patient record"""
     try:
         # Calculate medical values
-        diagnosa = klasifikasi_tekanan(umur, systolic, diastolic)
+        diagnosa = klasifikasi_tekanan(umur, sistol, diastol)
         bmi = bb / ((tb/100) ** 2)
-        kategori_bmi = bmi_klasifikasi(bmi)
+        kategori_bmi = klasifikasi_bmi(bmi)
         
         # Create patient dictionary
-        new_patient = {
-            'id': random_string(6),
-            'timestamp': time.strftime("%Y-%m-%d %H:%M:%S"),
+        pasien_baru = {
             'nama': nama,
             'berat_badan': bb,
             'tinggi_badan': tb,
             'umur': umur,
-            'systolic': systolic,
-            'diastolic': diastolic,
+            'sistol': sistol,
+            'diastol': diastol,
             'diagnosa': diagnosa,
             'bmi': round(bmi, 2),
             'kategori_bmi': kategori_bmi
         }
         
-        # Add to in-memory list
-        return database.add_data(new_patient)
+        return database.add_data(pasien_baru)
         
     except Exception as e:
         print(f"❌ Error: {e}")
         return False
 
-def read(index=None):
-    """Read data from memory"""
+def read(indeks=None):
+    """Read patient data"""
     try:
-        if index is not None:
-            # Return specific patient
-            return database.get_data_by_index(index)
+        if indeks is not None:
+            return database.get_data_by_index(indeks)
         else:
-            # Return all patients
             return database.get_all_data()
     except:
         return None
 
-def delete(index):
-    """Delete patient from memory"""
+def delete(indeks):
+    """Delete patient data"""
     try:
-        return database.delete_data(index)
+        return database.delete_data(indeks)
     except Exception as e:
         print(f"❌ Error: {e}")
         return False

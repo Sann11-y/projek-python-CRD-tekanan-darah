@@ -4,7 +4,7 @@ import CRD
 sistem_operasi = os.name
 
 def main():
-    # Initialize in-memory database
+    # Initialize DataFrame
     CRD.init_console()
     
     while True:
@@ -14,37 +14,37 @@ def main():
         else:
             os.system("clear")
         
-        print("-" * 50)
-        print("SISTEM MONITORING TEKANAN DARAH & BMI".center(50))
-        print("-" * 50)
+        print("-" * 60)
+        print("SISTEM MONITORING KESEHATAN (PANDAS)".center(60))
+        print("-" * 60)
         print("1. Buat Data Pasien Baru")
         print("2. Lihat Data Pasien") 
         print("3. Analisis Kesehatan")
         print("4. Hapus Data Pasien")
         print("5. Keluar")
-        print("-" * 50)
+        print("-" * 60)
         
         # Show current data count
-        dataSaatini = CRD.operasi.read()
-        if dataSaatini:
-            print(f"📊 Data saat ini: {len(dataSaatini)} pasien")
+        df = CRD.database.get_all_data()
+        if len(df) > 0:
+            print(f"📊 Data saat ini: {len(df)} pasien")
         else:
             print("📊 Data saat ini: Kosong")
-        print("-" * 50)
+        print("-" * 60)
 
-        user_option = input("Pilih opsi: ")
+        pilihan_user = input("Pilih opsi: ")
 
-        if user_option == "1":
+        if pilihan_user == "1":
             CRD.create_console()
-        elif user_option == "2":
+        elif pilihan_user == "2":
             CRD.read_console()
             input("Tekan Enter untuk lanjut...")
-        elif user_option == "3":
+        elif pilihan_user == "3":
             CRD.analisis_console()
-        elif user_option == "4":
+        elif pilihan_user == "4":
             CRD.delete_console()
-        elif user_option == "5":
-            print("Terima kasih! Program selesai.")
+        elif pilihan_user == "5":
+            print("\nTerima kasih! Program selesai.")
             print("💡 Catatan: Semua data akan hilang karena disimpan di memory saja.")
             break
         else:
