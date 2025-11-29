@@ -12,9 +12,11 @@ else:
 # Initialize database
 CRD.init_console()
 
-    while(True):
-        match sistem_operasi:
-            case "nt": os.system("cls")
+while True:
+    match sistem_operasi:
+
+        case "nt": os.system("cls")
+        case _: os.system("cls")
         
         # print(
         # "-"*60,"\n",
@@ -23,12 +25,11 @@ CRD.init_console()
         # "-"*60,
         # )
 
-        print(f"1. Buat Data Pasien Baru")
-        print(f"2. Lihat riwayat Data Pasien")
-        print(f"3. analsisi")
-        print(f"4. Hapus Riwayat Data Pasien")
-        print(f"\n")
-
+    print(f"1. Buat Data Pasien Baru")
+    print(f"2. Lihat riwayat Data Pasien")
+    print(f"3. Analisis")
+    print(f"4. Hapus Riwayat Data Pasien")
+    print(f"\n")
     user_option = input("Masukan opsi: ")
 
     if user_option == "1":
@@ -44,6 +45,6 @@ CRD.init_console()
 
     is_done = input("Apakah Selesai (y/n)? ")
     if is_done.lower() == "y":
-       break
+        break
 
 print("Program Berakhir, Terima Kasih KAKAAAAAA!!!")
