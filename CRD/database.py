@@ -1,5 +1,5 @@
 # Database in-memory pakai list
-patients_data = []  # ← LIST KOSONG untuk nyimpen data
+dataPasien = []  # ← LIST KOSONG untuk nyimpen data
 
 # Template structure untuk setiap pasien
 PATIENT_TEMPLATE = {
@@ -18,27 +18,27 @@ PATIENT_TEMPLATE = {
 
 def init_console():
     """Initialize in-memory database"""
-    patients_data.clear()  # Pastikan list kosong
+    dataPasien.clear()  # Pastikan list kosong
     print("✅ Database in-memory siap!")
 
 def get_all_data():
     """Get all patient data"""
-    return patients_data
+    return dataPasien
 
 def add_data(patient_dict):
     """Add new patient to list"""
-    patients_data.append(patient_dict)
+    dataPasien.append(patient_dict)
     return True
 
 def delete_data(index):
     """Delete patient by index"""
-    if 0 <= index < len(patients_data):
-        patients_data.pop(index)
+    if 0 <= index < len(dataPasien):
+        dataPasien.pop(index)
         return True
     return False
 
 def get_data_by_index(index):
     """Get specific patient by index"""
-    if 0 <= index < len(patients_data):
-        return patients_data[index]
+    if 0 <= index < len(dataPasien):
+        return dataPasien[index]
     return None
