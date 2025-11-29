@@ -18,16 +18,16 @@ def bmi_klasifikasi(bmi):
 def klasifikasi_tekanan(umur,systolic, diastolic):
     try:
         if 6<=umur<=12:
-            if systolic<131 and diastolic<55:
+            if systolic<96 or diastolic<55:
                 return "Hipotensi"
             elif systolic>131 or diastolic>62:
                 return "Hipertensi" 
             else:
                 return "Normal" 
-        elif 14<=umur<=18:
-            if systolic<112 and diastolic<62:
+        elif 13<=umur<=18:
+            if systolic<112 or diastolic<62:
                 return "Hipotensi"
-            elif systolic>128 and diastolic>80:
+            elif systolic>128 or diastolic>80:
                 return "Hipertensi"
             else:
                 return "Normal"
@@ -50,9 +50,29 @@ def klasifikasi_tekanan(umur,systolic, diastolic):
 
 def faktorPemicu(tekanan):
     if tekanan=="Hipotensi":
-        return "Dehidrasi, Kurang Nutrisi, Masalah Jantung, Masalah Endokrin, Kehamilan, Anafilaksis, Penggunaan Obat-obatan Tertentu"
+        return """Faktor pemicu Hipotensi anda adalah:
+            -Dehidrasi, 
+            -Kurangnya Nutrisi, 
+            -Masalah Jantung, 
+            -Masalah Endokrin, 
+            -Kehamilan, 
+            -Anafilaksis, 
+            -Penggunaan Obat-obatan Tertentu, 
+            -Pendarahan, 
+            -Infeksi Berat (Sepsis), 
+            -Berdiri Terlalu Lama"""
     elif tekanan=="Hipertensi":
-        return "Konsumsi Garam Berlebih, Obesitas, Kurang Aktivitas Fisik, Stres, Konsumsi Alkohol Berlebih, Merokok, Faktor Genetik"
+        return """Faktor pemicu Hipertensi anda adalah: 
+            -Konsumsi Garam Berlebih, 
+            -Obesitas, 
+            -Kurang Aktivitas Fisik, 
+            -Stres, 
+            -Konsumsi Alkohol Berlebih, 
+            -Merokok, 
+            -Faktor Genetik, 
+            -Usia, 
+            -Penyakit Ginjal, 
+            -Gangguan Hormon"""
     else:
         return "Tekanan darah normal, pertahankan pola hidup sehat!"
 
