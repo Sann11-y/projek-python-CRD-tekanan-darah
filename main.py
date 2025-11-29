@@ -44,6 +44,6 @@ CRD.init_console()
 
     is_done = input("Apakah Selesai (y/n)? ")
     if is_done.lower() == "y":
-        break
+       break
 
 print("Program Berakhir, Terima Kasih KAKAAAAAA!!!")
