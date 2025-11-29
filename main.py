@@ -20,13 +20,6 @@ if __name__ == "__main__":
     while(True):
         match sistem_operasi:
             case "nt": os.system("cls")
-        
-        # print(
-        # "-"*60,"\n",
-        # "|","SELAMAT DATANG DI PROGRAM".center(60),"|","\n",
-        # "|","Sistem Monitoring Tekanan Darah dan BMI".center(60),"|","\n"
-        # "-"*60,
-        # )
 
         print(f"1. Buat Data Pasien Baru")
         print(f"2. Lihat riwayat Data Pasien")
