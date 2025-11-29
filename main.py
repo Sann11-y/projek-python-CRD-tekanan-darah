@@ -1,25 +1,27 @@
 import os
 import CRD 
 
-if __name__ == "__main__":
-    sistem_operasi = os.name
+sistem_operasi = os.name
 
-    match sistem_operasi:
-        case "nt": os.system("cls")
+# Clear screen based on OS
+if sistem_operasi == "nt":
+    os.system("cls")
+else:
+    os.system("clear")
 
-    print(
-        "-"*60,"\n",
-        "|","SELAMAT DATANG DI PROGRAM".center(60),"|","\n",
-        "|","Sistem Monitoring Tekanan Darah dan BMI".center(60),"|","\n"
-        "-"*60,
-    )
-
-    # check database itu ada atau tidak
-    CRD.init_console()
+# Initialize database
+CRD.init_console()
 
     while(True):
         match sistem_operasi:
             case "nt": os.system("cls")
+        
+        # print(
+        # "-"*60,"\n",
+        # "|","SELAMAT DATANG DI PROGRAM".center(60),"|","\n",
+        # "|","Sistem Monitoring Tekanan Darah dan BMI".center(60),"|","\n"
+        # "-"*60,
+        # )
 
         print(f"1. Buat Data Pasien Baru")
         print(f"2. Lihat riwayat Data Pasien")
@@ -27,16 +29,21 @@ if __name__ == "__main__":
         print(f"4. Hapus Riwayat Data Pasien")
         print(f"\n")
 
-        user_option = input("Masukan opsi: ")
+    user_option = input("Masukan opsi: ")
 
-        match user_option:
-            case "1": CRD.create_console()
-            case "2": CRD.read_console()
-            case "4": CRD.delete_console()
-            case "3": CRD.analisis_console()
+    if user_option == "1":
+        CRD.create_console()
+    elif user_option == "2":
+        CRD.read_console()
+    elif user_option == "3":
+        CRD.analisis_console()
+    elif user_option == "4":
+        CRD.delete_console()
+    else:
+        print("Opsi tidak valid!")
 
-        is_done = input("Apakah Selesai (y/n)? ")
-        if is_done == "y" or is_done == "Y":
-            break
+    is_done = input("Apakah Selesai (y/n)? ")
+    if is_done.lower() == "y":
+        break
 
-    print("Program Berakhir, Terima Kasiih KAKAAAAAA!!!") 
+print("Program Berakhir, Terima Kasih KAKAAAAAA!!!")

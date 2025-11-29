@@ -1,5 +1,5 @@
 from . import operasi
-from .util import faktorPemicu, saranKesehatan
+from .util import faktorPemicu, saranKesehatan, bmi_klasifikasi
 
 def analisis_console():
     data_file = operasi.read()
@@ -23,22 +23,48 @@ def analisis_console():
     
     data_break = data_pasien.split(',')
     nama = data_break[2].strip()
-    umur = data_break[3].strip()
-    systolic = data_break[4].strip()
-    diastolic = data_break[5].strip()
-    diagnosa = data_break[6].strip()
+    bb = float(data_break[3].strip())
+    tb = float(data_break[4].strip())
+    umur = data_break[5].strip()
+    systolic = data_break[6].strip()
+    diastolic = data_break[7].strip()
+    diagnosa = data_break[8].strip()
+    
+    # Ambil BMI dari data atau hitung jika tidak ada
+    if len(data_break) >= 11:
+        bmi = float(data_break[9].strip())
+        kategori_bmi = data_break[10].strip()
+    else:
+        bmi = bb / ((tb/100) ** 2)
+        kategori_bmi = bmi_klasifikasi(bmi)
+    
+    # Ambil saran kesehatan
+    saran_tekanan, saran_bmi = saranKesehatan(diagnosa, bmi)
     
     print("\n"+"="*80)
-    print("ANALISIS KESEHATAN TEKANAN DARAH")
+    print("ANALISIS KESEHATAN TEKANAN DARAH DAN BMI".center(80))
     print("="*80)
-    print(f"Nama Pasien\t: {nama}")
-    print(f"Umur\t\t: {umur} tahun")
-    print(f"Tekanan Darah\t: {systolic}/{diastolic} mmHg")
-    print(f"Diagnosa\t: {diagnosa}")
-    print("\nFaktor Pemicu\t:")
-    print(f"  {faktorPemicu(diagnosa)}")
-    print("\nSaran Kesehatan\t:")
-    print(f"  {saranKesehatan(diagnosa)}")
+    print(f"Nama Pasien\t\t: {nama}")
+    print(f"Berat Badan\t\t: {bb} kg")
+    print(f"Tinggi Badan\t\t: {tb} cm")
+    print(f"BMI\t\t\t: {bmi:.2f}")
+    print(f"Kategori BMI\t\t: {kategori_bmi}")
+    print(f"Umur\t\t\t: {umur} tahun")
+    print(f"Tekanan Darah\t\t: {systolic}/{diastolic} mmHg")
+    print(f"Diagnosa Tekanan Darah\t: {diagnosa}")
+    
+    print("\n" + "="*80)
+    print("FAKTOR PEMICU")
+    print("="*80)
+    print(faktorPemicu(diagnosa))
+    
+    print("\n" + "="*80)
+    print("SARAN KESEHATAN")
+    print("="*80)
+    print(f"\nUntuk Tekanan Darah:")
+    print(f"  {saran_tekanan}")
+    print(f"\nUntuk BMI:")
+    print(f"  {saran_bmi}")
     print("="*80)
     input("\nTekan Enter untuk melanjutkan...")
 
@@ -57,21 +83,21 @@ def delete_console():
 
             if data_pasien:
                 data_break = data_pasien.split(',')
-                pk = data_break[0]
-                data_add = data_break[1]
                 nama = data_break[2]
-                umur = data_break[3]
-                systolic = data_break[4]
-                diastolic = data_break[5]
-                diagnosa = data_break[6][:-1]
-
+                bb = data_break[3]
+                tb = data_break[4]
+                systolic = data_break[6]
+                diastolic = data_break[7]
+                diagnosa = data_break[8].strip()
+                
                 print("\n"+"="*80)
                 print("Data yang ingin anda Hapus")
                 print(f"1. Nama\t\t: {nama:.40}")
-                print(f"2. Umur\t\t: {umur:3}")
-                print(f"3. Systolic\t: {systolic:3}")
-                print(f"4. Diastolic\t: {diastolic:3}")
-                print(f"5. Diagnosa\t: {diagnosa:.40}")
+                print(f"2. Berat Badan\t: {bb:12}")
+                print(f"3. Tinggi Badan\t: {tb:12}")
+                print(f"4. Systolic\t: {systolic:3}")
+                print(f"5. Diastolic\t: {diastolic:3}")
+                print(f"6. Diagnosa\t: {diagnosa:.40}")
                 is_done = input("Apakah anda yakin (y/n)? ")
                 if is_done.lower() == "y":
                     operasi.delete(no_data)
@@ -84,7 +110,6 @@ def delete_console():
     print("Data berhasil di hapus")
 
 
-
 def create_console():
     print("\n\n"+"="*80)
     print("Silahkan tambah data tekanan darah\n")
@@ -92,29 +117,15 @@ def create_console():
     
     while True:
         try:
-            bb=float(input("Berat Badan (kg)\t: "))
-            tb=float(input("Tinggi Badan (cm)\t: "))
+            bb = float(input("Berat Badan (kg)\t: "))
+            tb = float(input("Tinggi Badan (cm)\t: "))
             if bb > 0 and tb > 0:
                 break
             else:
                 print("Berat badan dan tinggi badan harus lebih dari 0")
         except:
             print("Berat badan dan tinggi badan harus angka")
-    bmi = bb/((tb/100)**2)
-    print(f"Indeks Massa Tubuh (BMI) Anda: {bmi:.2f}")
-    if bmi < 18.5:
-        print("Kategori: Kekurangan Berat Badan")
-    elif bmi >= 18.5 and bmi <= 24.9:
-        print("Kategori: Normal")
-    elif bmi >= 25 and bmi <= 29.9:
-        print("Kategori: Kelebihan Berat Badan")
-    else:
-        print("Kategori: Obesitas")
-    print("="*80)
-    print("\n")
     
-
-
     while True:
         try:
             umur = int(input("Umur\t\t: "))
@@ -145,8 +156,7 @@ def create_console():
         except:
             print("Diastolic harus angka")
 
-
-    operasi.create(nama,umur,systolic,diastolic)
+    operasi.create(nama,bb,tb,umur,systolic,diastolic)
     print("\nBerikut adalah data baru anda")
     read_console()
 
@@ -157,24 +167,37 @@ def read_console():
         print("Tidak ada data yang ditemukan")
         return
 
-    no = "No"
-    nama = "Nama Pasien"
-    umur = "Umur"
-    systolic = "Systolic"
-    diastolic = "Diastolic"
-    diagnosa = "Diagnosa"
-
-    print("\n"+"="*100)
-    print(f"{no:4} | {nama:20} | {umur:4} | {systolic:8} | {diastolic:9} | {diagnosa:15}")
-    print("-"*100)
+    print("\n"+"="*135)
+    print(f"{'No':3} | {'Nama':20} | {'BB(kg)':7} | {'TB(cm)':7} | {'BMI':6} | {'Umur':4} | {'Sys':4} | {'Dias':4} | {'Diagnosa TD':13} | {'Kategori BMI':22}")
+    print("-"*135)
     
-    for index,data in enumerate(data_file):
+    for index, data in enumerate(data_file):
         data_break = data.split(",")
+        
+        if len(data_break) < 9:
+            continue
+        
         nama = data_break[2].strip()
-        umur = data_break[3].strip()
-        systolic = data_break[4].strip()
-        diastolic = data_break[5].strip()
-        diagnosa = data_break[6].strip()
-        print(f"{index+1:4} | {nama:20.20} | {umur:4} | {systolic:8} | {diastolic:9} | {diagnosa:15.15}")
+        bb = data_break[3].strip()
+        tb = data_break[4].strip()
+        umur = data_break[5].strip()
+        systolic = data_break[6].strip()
+        diastolic = data_break[7].strip()
+        diagnosa = data_break[8].strip()
+        
+        # Ambil BMI dari data atau hitung
+        if len(data_break) >= 11:
+            bmi = data_break[9].strip()
+            kategori_bmi = data_break[10].strip()
+        else:
+            try:
+                bmi_calc = float(bb) / ((float(tb)/100) ** 2)
+                bmi = f"{bmi_calc:.2f}"
+                kategori_bmi = bmi_klasifikasi(bmi_calc)
+            except:
+                bmi = "N/A"
+                kategori_bmi = "N/A"
+        
+        print(f"{index+1:3} | {nama:20.20} | {bb:7} | {tb:7} | {bmi:6} | {umur:4} | {systolic:4} | {diastolic:4} | {diagnosa:13.13} | {kategori_bmi:22.22}")
 
-    print("="*100+"\n")
+    print("="*135+"\n")

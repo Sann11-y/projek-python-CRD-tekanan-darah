@@ -1,6 +1,6 @@
 from time import time
 from .import database
-from .util import random_string, klasifikasi_tekanan
+from .util import bmi_klasifikasi, random_string, klasifikasi_tekanan
 import time
 import os
 
@@ -19,32 +19,42 @@ def delete(no_data):
                         temp_file.write(content)
                 counter += 1
         
-        # Hapus file lama dan rename file temp
         os.remove(database.DB_NAME)
         os.rename("data_temp.txt", database.DB_NAME)
     except Exception as e:
         print(f"database error: {e}")
-        # Hapus file temp jika ada error
         if os.path.exists("data_temp.txt"):
             os.remove("data_temp.txt")
 
 
-def create(nama,umur,systolic,diastolic):
+def create(nama,bb,tb,umur,systolic,diastolic):
     diagnosa = klasifikasi_tekanan(int(umur),int(systolic),int(diastolic))
-    
+    bmi = float(bb) / ((float(tb)/100) ** 2)
+    kategori_bmi = bmi_klasifikasi(bmi)
+
     data = database.TEMPLATE.copy()
+
+    bb_str = str(bb)
+    tb_str = str(tb)
+    bmi_str = f"{bmi:.2f}"
+    umur_str = str(umur)
+    systolic_str = str(systolic)
+    diastolic_str = str(diastolic)
 
     data["pk"] = random_string(6)
     data["date_add"] = time.strftime("%Y-%m-%d-%H-%M-%S%z",time.gmtime())
     data["nama"] = nama + database.TEMPLATE["nama"][len(nama):]
-    data["Berat Badan"] = database.TEMPLATE["Berat Badan"]
-    data["Tinggi Badan"] = database.TEMPLATE["Tinggi Badan"]
-    data["umur"] = str(umur)
-    data["systolic"] = str(systolic)
-    data["diastolic"] = str(diastolic)
+    data["Berat Badan"] = bb_str + database.TEMPLATE["Berat Badan"][len(bb_str):]
+    data["Tinggi Badan"] = tb_str + database.TEMPLATE["Tinggi Badan"][len(tb_str):]
+    
+    # FIX: Tambahkan spasi untuk padding, bukan ambil dari template "yyy"
+    data["umur"] = umur_str + " " * (len(database.TEMPLATE["umur"]) - len(umur_str))
+    data["systolic"] = systolic_str + " " * (len(database.TEMPLATE["systolic"]) - len(systolic_str))
+    data["diastolic"] = diastolic_str + " " * (len(database.TEMPLATE["diastolic"]) - len(diastolic_str))
+    
     data["diagnosa"] = diagnosa + database.TEMPLATE["diagnosa"][len(diagnosa):]
 
-    data_str = f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["umur"]},{data["systolic"]},{data["diastolic"]},{data["diagnosa"]}\n'
+    data_str = f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["Berat Badan"]},{data["Tinggi Badan"]},{data["umur"]},{data["systolic"]},{data["diastolic"]},{data["diagnosa"]},{bmi_str},{kategori_bmi}\n'
     
     try:
         with open(database.DB_NAME,'a',encoding="utf-8") as file:
@@ -55,6 +65,17 @@ def create(nama,umur,systolic,diastolic):
 def create_first_data():
     print("Membuat data pertama")
     nama = input("Nama Pasien: ")
+
+    while True:
+        try:
+            bb = float(input("Berat Badan (kg): "))
+            tb = float(input("Tinggi Badan (cm): "))
+            if bb > 0 and tb > 0:
+                break
+            else:
+                print("Berat badan dan tinggi badan harus lebih dari 0")
+        except:
+            print("Berat badan dan tinggi badan harus angka")
     
     while True:
         try:
@@ -89,16 +110,30 @@ def create_first_data():
     diagnosa = klasifikasi_tekanan(umur,systolic,diastolic)
 
     data = database.TEMPLATE.copy()
+    bmi = float(bb) / ((float(tb)/100) ** 2)
+    kategori_bmi = bmi_klasifikasi(bmi)
+
+    bb_str = str(bb)
+    tb_str = str(tb)
+    bmi_str = f"{bmi:.2f}"
+    umur_str = str(umur)
+    systolic_str = str(systolic)
+    diastolic_str = str(diastolic)
 
     data["pk"] = random_string(6)
     data["date_add"] = time.strftime("%Y-%m-%d-%H-%M-%S%z",time.gmtime())
     data["nama"] = nama + database.TEMPLATE["nama"][len(nama):]
-    data["umur"] = str(umur)
-    data["systolic"] = str(systolic)
-    data["diastolic"] = str(diastolic)
+    data["Berat Badan"] = bb_str + database.TEMPLATE["Berat Badan"][len(bb_str):]
+    data["Tinggi Badan"] = tb_str + database.TEMPLATE["Tinggi Badan"][len(tb_str):]
+    
+    # FIX: Tambahkan spasi untuk padding
+    data["umur"] = umur_str + " " * (len(database.TEMPLATE["umur"]) - len(umur_str))
+    data["systolic"] = systolic_str + " " * (len(database.TEMPLATE["systolic"]) - len(systolic_str))
+    data["diastolic"] = diastolic_str + " " * (len(database.TEMPLATE["diastolic"]) - len(diastolic_str))
+    
     data["diagnosa"] = diagnosa + database.TEMPLATE["diagnosa"][len(diagnosa):]
 
-    data_str = f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["umur"]},{data["systolic"]},{data["diastolic"]},{data["diagnosa"]}\n'
+    data_str = f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["Berat Badan"]},{data["Tinggi Badan"]},{data["umur"]},{data["systolic"]},{data["diastolic"]},{data["diagnosa"]},{bmi_str},{kategori_bmi}\n'
     
     try:
         with open(database.DB_NAME,'w',encoding="utf-8") as file:
