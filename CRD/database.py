@@ -1,16 +1,18 @@
+# database.py - VERSI FINAL YANG DIREKOMENDASIKAN
 import pandas as pd
 
-df_pasien = pd.DataFrame()
-
+# Inisialisasi kolom
 KOLOM = [
     'nama', 'berat_badan', 'tinggi_badan', 
     'umur', 'sistol', 'diastol', 'diagnosa', 'bmi', 'kategori_bmi'
 ]
 
+df_pasien = pd.DataFrame(columns=KOLOM)
+
 def init_console():
     """Initialize DataFrame"""
     global df_pasien
-    df_pasien = pd.DataFrame(columns=KOLOM)
+    df_pasien = pd.DataFrame(columns=KOLOM)  # DataFrame fresh
     print("✅ Database Pandas DataFrame siap!")
 
 def get_all_data():
@@ -18,11 +20,12 @@ def get_all_data():
     return df_pasien
 
 def add_data(data_pasien):
-    """Add new patient data"""
+    """Add new patient data - CARA TERBAIK"""
     global df_pasien
     try:
-        baris_baru = pd.DataFrame([data_pasien])
-        df_pasien = pd.concat([df_pasien, baris_baru], ignore_index=True)
+        # ✅ SOLUSI TERBAIK - pakai .loc[]
+        new_index = len(df_pasien)
+        df_pasien.loc[new_index] = data_pasien
         return True
     except Exception as e:
         print(f"Error adding data: {e}")
@@ -33,7 +36,7 @@ def delete_data(indeks):
     global df_pasien
     try:
         if 0 <= indeks < len(df_pasien):
-            df_pasien = df_pasien.drop(df_pasien.index[indeks]).reset_index(drop=True)
+            df_pasien = df_pasien.drop(indeks).reset_index(drop=True)
             return True
         return False
     except:
