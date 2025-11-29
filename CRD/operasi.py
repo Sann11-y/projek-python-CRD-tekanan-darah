@@ -31,7 +31,7 @@ def delete(no_data):
 
 def create(nama,bb,tb,umur,systolic,diastolic):
     diagnosa = klasifikasi_tekanan(int(umur),int(systolic),int(diastolic))
-    bmi = int(bb) / ((int(tb)/100) ** 2)
+    bmi = float(bb) / ((float(tb)/100) ** 2)
     kategrori_bmi = bmi_klasifikasi(bmi)
 
     data = database.TEMPLATE.copy()
@@ -51,7 +51,7 @@ def create(nama,bb,tb,umur,systolic,diastolic):
     data["diastolic"] = str(diastolic)+ database.TEMPLATE["diastolic"][len(str(diastolic)):]
     data["diagnosa"] = diagnosa + database.TEMPLATE["diagnosa"][len(diagnosa):]
 
-    data_str = f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["Berat Badan"]},{data["Tinggi Badan"]},{data["umur"]},{data["systolic"]},{data["diastolic"]},{data["diagnosa"]}\n'
+    data_str = f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["Berat Badan"]},{data["Tinggi Badan"]},{data["umur"]},{data["systolic"]},{data["diastolic"]},{data["diagnosa"]},{bmi_str},{kategrori_bmi}\n'
     
     try:
         with open(database.DB_NAME,'a',encoding="utf-8") as file:
@@ -107,7 +107,7 @@ def create_first_data():
     diagnosa = klasifikasi_tekanan(umur,systolic,diastolic)
 
     data = database.TEMPLATE.copy()
-    bmi = int(bb) / ((int(tb)/100) ** 2)
+    bmi = float(bb) / ((float(tb)/100) ** 2)
     kategrori_bmi = bmi_klasifikasi(bmi)
 
 
@@ -125,7 +125,7 @@ def create_first_data():
     data["diastolic"] = str(diastolic)+ database.TEMPLATE["diastolic"][len(str(diastolic)):]
     data["diagnosa"] = diagnosa + database.TEMPLATE["diagnosa"][len(diagnosa):]
 
-    data_str = f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["Berat Badan"]},{data["Tinggi Badan"]},{data["umur"]},{data["systolic"]},{data["diastolic"]},{data["diagnosa"]}\n'
+    data_str = f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["Berat Badan"]},{data["Tinggi Badan"]},{data["umur"]},{data["systolic"]},{data["diastolic"]},{data["diagnosa"]},{bmi_str},{kategrori_bmi}\n'
     
     try:
         with open(database.DB_NAME,'w',encoding="utf-8") as file:

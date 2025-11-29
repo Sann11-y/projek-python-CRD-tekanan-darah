@@ -42,7 +42,7 @@ def analisis_console():
     print("\nFaktor Pemicu\t:")
     print(f"  {faktorPemicu(diagnosa)}")
     print("\nSaran Kesehatan\t:")
-    print(f"  {saranKesehatan(diagnosa)}")
+    print(f"  {saranKesehatan(diagnosa,bmi)}")
     print("="*80)
     input("\nTekan Enter untuk melanjutkan...")
 
