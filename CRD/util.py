@@ -32,14 +32,14 @@ def klasifikasi_tekanan(umur,systolic, diastolic):
             else:
                 return "Normal"
         elif 19<=umur<=65:
-            if systolic<90 and diastolic<60:
+            if systolic<90 or diastolic<60:
                 return "Hipotensi"
             elif systolic>120 or diastolic>80:  
                 return "Hipertensi"
             else:
                 return "Normal"
         else:
-            if systolic<90 and diastolic<60:
+            if systolic<90 or diastolic<60:
                 return "Hipotensi"
             elif systolic>150 or diastolic>90:
                 return "Hipertensi"
