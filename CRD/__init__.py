@@ -5,4 +5,4 @@ from .tampilan import (
     delete_console, 
     analisis_console
 )
-from . import database, operasi 
+from . import database, operasi
