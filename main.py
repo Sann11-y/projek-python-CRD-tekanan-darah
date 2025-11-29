@@ -15,7 +15,7 @@ def main():
             os.system("clear")
         
         print("-" * 50)
-        print("SISTEM MONITORING KESEHATAN (IN-MEMORY)".center(50))
+        print("SISTEM MONITORING TEKANAN DARAH & BMI".center(50))
         print("-" * 50)
         print("1. Buat Data Pasien Baru")
         print("2. Lihat Data Pasien") 
