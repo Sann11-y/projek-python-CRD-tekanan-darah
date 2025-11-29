@@ -11,7 +11,6 @@ else:
 
 # Initialize database
 CRD.init_console()
-
 while True:
     match sistem_operasi:
 
