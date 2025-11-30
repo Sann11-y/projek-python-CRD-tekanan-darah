@@ -42,9 +42,6 @@ def klasifikasi_tekanan(umur, sistol, diastol):
 
 def saran_kesehatan(tekanan, bmi):
     """Generate health advice based on diagnosis"""
-    saran_tekanan = ""
-    saran_bmi = ""
-    
     if tekanan == "Hipotensi":
         saran_tekanan = "Perbanyak minum, makan bergizi, hindari berdiri lama"
     elif tekanan == "Hipertensi":

@@ -1,6 +1,5 @@
 from . import database
 from .util import saran_kesehatan
-import pandas as pd
 
 def create_console():
     """Create new patient console"""
