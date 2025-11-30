@@ -158,7 +158,6 @@ def analisis_console():
     
     print("="*60)
     
-    input("\nTekan Enter untuk lanjut...")
 
 def delete_console():
     """Delete patient record console"""
