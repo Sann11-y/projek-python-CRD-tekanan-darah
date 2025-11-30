@@ -9,10 +9,7 @@ def main():
     
     while True:
         # Clear screen
-        if sistem_operasi == "nt":
-            os.system("cls")
-        else:
-            os.system("clear")
+        os.system("cls" if sistem_operasi == "nt" else "clear")
         
         print("-" * 60)
         print("SISTEM MONITORING KESEHATAN TEKANAN DARAH & BMI".center(60))
@@ -25,11 +22,8 @@ def main():
         print("-" * 60)
         
         # Show current data count
-        df = CRD.database.get_all_data()
-        if len(df) > 0:
-            print(f"📊 Data saat ini: {len(df)} pasien")
-        else:
-            print("📊 Data saat ini: Kosong")
+        df = CRD.database.read()
+        print(f"📊 Data saat ini: {len(df)} pasien" if len(df) > 0 else "📊 Data saat ini: Kosong")
         print("-" * 60)
 
         pilihan_user = input("Pilih opsi: ")

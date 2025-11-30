@@ -63,8 +63,7 @@ def create_console():
     
     if database.create(nama, bb, tb, umur, sistol, diastol):
         print("\n✅ Data berhasil ditambahkan!")
-        df = database.get_all_data()
-        print(f"📊 Total data sekarang: {len(df)} pasien")
+        print(f"📊 Total data sekarang: {len(database.read())} pasien")
     else:
         print("\n❌ Gagal menambah data!")
     
@@ -72,7 +71,7 @@ def create_console():
 
 def read_console():
     """Display all patients console"""
-    df = database.get_all_data()
+    df = database.read()
     
     if len(df) == 0:
         print("\n📭 Tidak ada data pasien!")
@@ -101,7 +100,7 @@ def read_console():
 
 def analisis_console():
     """Analyze patient health console"""
-    df = database.get_all_data()
+    df = database.read()
     
     if len(df) == 0:
         print("📭 Tidak ada data pasien!")
@@ -143,7 +142,7 @@ def analisis_console():
 
 def delete_console():
     """Delete patient record console"""
-    df = database.get_all_data()
+    df = database.read()
     
     if len(df) == 0:
         print("📭 Tidak ada data pasien!")
@@ -176,8 +175,7 @@ def delete_console():
     if konfirmasi == 'y':
         if database.delete(nomor_data):
             print("✅ Data berhasil dihapus!")
-            df = database.get_all_data()
-            print(f"📊 Sisa data: {len(df)} pasien")
+            print(f"📊 Sisa data: {len(database.read())} pasien")
         else:
             print("❌ Gagal menghapus data!")
     else:
