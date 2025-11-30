@@ -31,7 +31,7 @@ def create_console():
                 continue
             else:
                 break
-        except:
+        except ValueError: 
             print("❌ Error: Input harus angka!")
 
     while True:
