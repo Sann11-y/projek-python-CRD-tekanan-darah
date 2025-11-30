@@ -1,4 +1,4 @@
-from . import operasi, database
+from . import database
 from .util import saran_kesehatan
 import pandas as pd
 
@@ -62,7 +62,7 @@ def create_console():
         except ValueError:
             print("❌ Error: Input harus angka!")
     
-    if operasi.create(nama, bb, tb, umur, sistol, diastol):
+    if database.create(nama, bb, tb, umur, sistol, diastol):
         print("\n✅ Data berhasil ditambahkan!")
         df = database.get_all_data()
         print(f"📊 Total data sekarang: {len(df)} pasien")
@@ -114,7 +114,7 @@ def analisis_console():
     while True:
         try:
             nomor_data = int(input("\n🔍 Pilih nomor data untuk dianalisis: ")) - 1
-            data_pasien = operasi.read(nomor_data)
+            data_pasien = database.read(nomor_data)
             
             if data_pasien is not None:
                 break
@@ -156,7 +156,7 @@ def delete_console():
     while True:
         try:
             nomor_data = int(input("\n🗑️  Pilih nomor data yang akan dihapus: ")) - 1
-            data_pasien = operasi.read(nomor_data)
+            data_pasien = database.read(nomor_data)
             
             if data_pasien is not None:
                 break
@@ -175,7 +175,7 @@ def delete_console():
     konfirmasi = input("\nApakah Anda yakin? (y/n): ").lower()
     
     if konfirmasi == 'y':
-        if operasi.delete(nomor_data):
+        if database.delete(nomor_data):
             print("✅ Data berhasil dihapus!")
             df = database.get_all_data()
             print(f"📊 Sisa data: {len(df)} pasien")

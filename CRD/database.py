@@ -1,5 +1,6 @@
-# database.py - VERSI FINAL YANG DIREKOMENDASIKAN
+# data_manager.py - Gabungan database.py + operasi.py
 import pandas as pd
+from .util import klasifikasi_bmi, klasifikasi_tekanan
 
 # Inisialisasi kolom
 KOLOM = [
@@ -12,35 +13,12 @@ df_pasien = pd.DataFrame(columns=KOLOM)
 def init_console():
     """Initialize DataFrame"""
     global df_pasien
-    df_pasien = pd.DataFrame(columns=KOLOM)  # DataFrame fresh
+    df_pasien = pd.DataFrame(columns=KOLOM)
     print("✅ Database Pandas DataFrame siap!")
 
 def get_all_data():
     """Get all patient data"""
     return df_pasien
-
-def add_data(data_pasien):
-    """Add new patient data - CARA TERBAIK"""
-    global df_pasien
-    try:
-        # ✅ SOLUSI TERBAIK - pakai .loc[]
-        new_index = len(df_pasien)
-        df_pasien.loc[new_index] = data_pasien
-        return True
-    except Exception as e:
-        print(f"Error adding data: {e}")
-        return False
-
-def delete_data(indeks):
-    """Delete patient data by index"""
-    global df_pasien
-    try:
-        if 0 <= indeks < len(df_pasien):
-            df_pasien = df_pasien.drop(indeks).reset_index(drop=True)
-            return True
-        return False
-    except:
-        return False
 
 def get_data_by_index(indeks):
     """Get specific patient by index"""
@@ -50,3 +28,56 @@ def get_data_by_index(indeks):
         return None
     except:
         return None
+
+def create(nama, bb, tb, umur, sistol, diastol):
+    """Create new patient record"""
+    global df_pasien
+    try:
+        # Calculate medical values
+        diagnosa = klasifikasi_tekanan(umur, sistol, diastol)
+        bmi = bb / ((tb/100) ** 2)
+        kategori_bmi = klasifikasi_bmi(bmi)
+        
+        # Create patient dictionary
+        pasien_baru = {
+            'nama': nama,
+            'berat_badan': bb,
+            'tinggi_badan': tb,
+            'umur': umur,
+            'sistol': sistol,
+            'diastol': diastol,
+            'diagnosa': diagnosa,
+            'bmi': round(bmi, 2),
+            'kategori_bmi': kategori_bmi
+        }
+        
+        # Add to DataFrame
+        new_index = len(df_pasien)
+        df_pasien.loc[new_index] = pasien_baru
+        return True
+        
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        return False
+
+def read(indeks=None):
+    """Read patient data"""
+    try:
+        if indeks is not None:
+            return get_data_by_index(indeks)
+        else:
+            return get_all_data()
+    except:
+        return None
+
+def delete(indeks):
+    """Delete patient data"""
+    global df_pasien
+    try:
+        if 0 <= indeks < len(df_pasien):
+            df_pasien = df_pasien.drop(indeks).reset_index(drop=True)
+            return True
+        return False
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        return False
