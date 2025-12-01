@@ -1,40 +1,28 @@
-'''Pandas Module
-Menyediakan struktur data dan alat analisis data yang kuat untuk Python.'''
-import pandas as pd
-
-'''Fungsi dari jantung_console.py yang diperlukan'''
 from .jantung_console import klasifikasi_bmi, klasifikasi_tekanan
 
-'''Inisialisasi Kolom DataFrame Pandas'''
-DATA = [
-    'nama', 'berat_badan', 'tinggi_badan', 
-    'umur', 'sistol', 'diastol', 'diagnosa', 'bmi', 'kategori_bmi', 'saran_gemini'
-]
+df_pasien = [] 
 
-df_pasien = pd.DataFrame(columns=DATA)
-
-'''
-Inisialisasi DataFrame Pandas untuk menyimpan data pasien tekanan darah dan BMI.
+'''Inisialisasi Data Pasien
+Membuat list kosong untuk menyimpan data pasien.
 '''
 def init_console():
-    """Inisialisasi database pandas DataFrame"""
     global df_pasien
-    df_pasien = pd.DataFrame(columns=DATA)
-    # print("Database Pandas DataFrame siap!") # Hilangkan print untuk kerapihan
+    df_pasien = [] 
 
 '''
-Menambahkan data pasien ke dalam DataFrame Pandas.
+Menambahkan data pasien ke dalam list.
 '''
 def create(nama, bb, tb, umur, sistol, diastol):
     global df_pasien
     
     try:
         diagnosa = klasifikasi_tekanan(umur, sistol, diastol)
-        # Konversi cm ke meter saat perhitungan BMI
-        bmi = bb / ((tb/100) ** 2) 
-        kategori_bmi = klasifikasi_bmi(bmi)
         
-        df_pasien.loc[len(df_pasien)] = {
+        tinggi_meter = tb / 100.0 
+        bmi_hitung = bb / (tinggi_meter * tinggi_meter) 
+        kategori_hasil_bmi = klasifikasi_bmi(bmi_hitung) 
+        
+        data_baru = {
             'nama': nama,
             'berat_badan': bb,
             'tinggi_badan': tb,
@@ -42,36 +30,36 @@ def create(nama, bb, tb, umur, sistol, diastol):
             'sistol': sistol,
             'diastol': diastol,
             'diagnosa': diagnosa,
-            'bmi': round(bmi, 2),
-            'kategori_bmi': kategori_bmi,
-            'saran_gemini': "" # Kosongkan saran saat create
+            'bmi': round(bmi_hitung, 2), 
+            'kategori_bmi': kategori_hasil_bmi, 
+            'saran_gemini': "" 
         }
+        df_pasien.append(data_baru)
         return True
     except Exception as e:
         print(f"Error: {e}")
         return False
 
 '''
-Membaca data pasien dari DataFrame Pandas.
+Membaca data pasien dari list.
 Jika indeks diberikan, kembalikan data pasien sebagai dict.
-Jika tidak, kembalikan DataFrame.
+Jika tidak, kembalikan seluruh list.
 '''
 def read(indeks=None):
     if indeks is not None:
         if 0 <= indeks < len(df_pasien):
-            return df_pasien.iloc[indeks].to_dict()
+            return df_pasien[indeks] 
         return None
     return df_pasien
 
 '''
-Menghapus data pasien dari DataFrame Pandas berdasarkan indeks.
+Menghapus data pasien dari list berdasarkan indeks.
 '''
 def delete(indeks):
     global df_pasien
     try:
         if 0 <= indeks < len(df_pasien):
-            # Drop baris dan reset index
-            df_pasien = df_pasien.drop(indeks).reset_index(drop=True)
+            df_pasien.pop(indeks) 
             return True
         return False
     except Exception as e:
@@ -85,8 +73,8 @@ def update_saran(indeks, saran_text):
     global df_pasien
     try:
         if 0 <= indeks < len(df_pasien):
-            # Menggunakan .loc untuk memperbarui nilai di kolom 'saran_gemini'
-            df_pasien.loc[indeks, 'saran_gemini'] = saran_text
+            # Update nilai di dictionary dalam list
+            df_pasien[indeks]['saran_gemini'] = saran_text
             return True
         return False
     except Exception as e:

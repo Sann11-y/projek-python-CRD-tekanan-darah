@@ -1,17 +1,8 @@
-'''os Module
-Menyediakan fungsi untuk berinteraksi dengan sistem operasi.'''
 import os
 
-'''dotenv Module
-Membaca variabel lingkungan dari file .env.'''
 from google import genai
-
-'''genai Module
-SDK untuk berinteraksi dengan Google Gemini AI.'''
 from google.genai import types
 
-'''Database Module
-Menyediakan fungsi CRUD untuk mengelola data pasien tekanan darah dan BMI menggunakan Pandas Data'''
 from . import database 
 
 '''
@@ -37,6 +28,7 @@ def klasifikasi_tekanan(umur, sistol, diastol):
             return "Hipertensi"
         else: 
             return "Normal" 
+            
     elif 13 <= umur <= 18:
         if sistol < 112 or diastol < 62: 
             return "Hipotensi"
@@ -44,19 +36,22 @@ def klasifikasi_tekanan(umur, sistol, diastol):
             return "Hipertensi"
         else: 
             return "Normal"
+            
     elif 19 <= umur <= 65:
-        if sistol < 90 or diastol < 60: 
-            return "Hipotensi"
-        elif sistol > 120 or diastol > 80: 
+        # Ubah urutan cek: Cek Hipertensi dulu (Sentuhan Manusiawi)
+        if sistol > 120 or diastol > 80: 
             return "Hipertensi"
-        else: 
-            return "Normal"
-    else: # > 65
-        if sistol < 90 or diastol < 60: 
+        elif sistol < 90 or diastol < 60: # Cek Hipotensi
             return "Hipotensi"
-        elif sistol > 150 or diastol > 90: 
+        else:
+            return "Normal" # Jika lolos kedua cek di atas
+            
+    else: # > 65 (Ubah urutan cek di sini juga)
+        if sistol > 150 or diastol > 90: 
             return "Hipertensi"
-        else: 
+        elif sistol < 90 or diastol < 60: 
+            return "Hipotensi"
+        else:
             return "Normal"
 
 '''
@@ -75,7 +70,7 @@ def rekomendasi_kesehatan (client: genai.Client , user_input: str) -> str:
     2. Memberikan TEPAT 3 rekomendasi kesehatan dasar yang relevan dan tidak bertele-tele.
     3. Format respons harus rapi dan mudah dibaca (gunakan list/bullet point untuk saran).
     4. Selalu ingatkan untuk konsultasi ke profesional medis.
-    5. JIKA INPUT PENGGUNA TIDAK TERKAIT DENGAN KESEHATAN, JAWAB DENGAN TEGAS: "Input anda di luar konteks kesehatan. Silahkan masukan pertanyaan yang berhubungan dengan kesehatan."
+    5. JIKA INPUT PENGGUNA TIDAK TERKAIT DENGAN KESEHATAN, JAWAB DENGAS TEGAS: "Input anda di luar konteks kesehatan. Silahkan masukan pertanyaan yang berhubungan dengan kesehatan."
     """
     
     print(f'Memproses data dengan Gemini...')
@@ -136,6 +131,7 @@ def create_console():
         try:
             sistol = int(input("Tekanan Darah (Systolic)\t: "))
             diastol = int(input("Tekanan Darah (Diastolic)\t: "))
+
             if sistol <= 0 or diastol <= 0:
                 print("Error: Semua nilai harus positif!")
                 continue
@@ -145,19 +141,17 @@ def create_console():
             elif sistol == diastol:
                 print("Error: Systolic dan Diastolic tidak boleh sama!")
                 continue
-            # Batasan yang lebih longgar, menghilangkan batasan pulse pressure
             elif sistol < 50 or diastol < 30 or sistol > 300 or diastol > 200:
                 print("Error: Tekanan darah terlalu ekstrem!")
                 continue
             else:
-                break
+                break 
         except ValueError:
             print("Error: Input harus angka!")
     
     if database.create(nama, bb, tb, umur, sistol, diastol):
         print("\nData berhasil ditambahkan!")
         print(f"Total data sekarang: {len(database.read())} pasien")
-        # Tidak ada pemanggilan Gemini di sini
     else:
         print("\nGagal menambah data!")
 
@@ -165,22 +159,19 @@ def create_console():
 Tampilkan Semua Data Pasien Console
 '''
 def read_console():
-    """Display all patients console"""
-    df = database.read()
+    list_pasien = database.read() 
     
-    if len(df) == 0:
+    if len(list_pasien) == 0:
         print("\nTidak ada data pasien!")
         return
 
-    # Ubah lebar total menjadi 115
     print("\n" + "="*115) 
     print("DAFTAR PASIEN")
     print("="*115)
-    # Tambah kolom baru 'Saran AI'
-    print(f"{'No':3} | {'Nama':20} | {'BB(kg)':6} | {'TB(cm)':6} | {'BMI':5} | {'Umur':4} | {'Tekanan':12} | {'Diagnosa':12} | {'Kategori BMI':12} | {'Saran AI':10}")
+    print("No  | Nama                 | BB(kg) | TB(cm) | BMI   | Umur | Tekanan      | Diagnosa     | Kategori BMI | Saran AI")
     print("-"*115) 
     
-    for indeks, baris in df.iterrows():
+    for indeks, baris in enumerate(list_pasien):
         nama = str(baris['nama'])[:20]
         bb = f"{baris['berat_badan']:.1f}"
         tb = f"{baris['tinggi_badan']:.1f}"
@@ -193,21 +184,20 @@ def read_console():
         # Logika Kolom Saran AI baru
         saran_ai = "Ada" if baris['saran_gemini'] else "Kosong" 
         
-        # Tambahkan kolom saran_ai
-        print(f"{indeks+1:3} | {nama:20} | {bb:6} | {tb:6} | {bmi:5} | {umur:4} | {tekanan_darah:12} | {diagnosa:12} | {kategori_bmi:12} | {saran_ai:10}")
+        print(f"{indeks+1:3} | {nama:<20} | {bb:<6} | {tb:<6} | {bmi:<5} | {umur:<4} | {tekanan_darah:<12} | {diagnosa:<12} | {kategori_bmi:<12} | {saran_ai:<10}")
 
     print("="*115) 
-    print(f"Total: {len(df)} pasien")
+    print(f"Total: {len(list_pasien)} pasien")
 
 '''
 Analisis Kesehatan Console & Integrasi Panggilan Gemini
 '''
 def analisis_console(gemini_client):
     """Analyze patient health console & integrate Gemini call"""
-    df = database.read()
+    list_pasien = database.read()
     sistem_operasi = os.name 
 
-    if len(df) == 0:
+    if len(list_pasien) == 0:
         print("\nTidak ada data pasien!")
         return
         
@@ -225,9 +215,8 @@ def analisis_console(gemini_client):
         except ValueError:
             print("Input harus angka!")
     
-    # Ambil saran yang sudah tersimpan
     saran_gemini = data_pasien.get('saran_gemini') 
-    saran_baru_dibuat = False # Flag untuk melacak apakah saran baru dihasilkan
+    saran_baru_dibuat = False
 
     # JIKA SARAN BELUM ADA, PANGGIL GEMINI
     if not saran_gemini and gemini_client is not None:
@@ -251,22 +240,15 @@ def analisis_console(gemini_client):
             f"{data_string}\n"
             f"Berdasarkan data di atas, berikan analisis singkat dan TEPAT 3 saran kesehatan."
         )
-        
-        # Tampilkan proses loading di layar
         print("\n" + "-" * 60)
         print("MENGANALISIS DATA PASIEN DENGAN GEMINI AI".center(60))
         print("-" * 60)
-
         response_text = rekomendasi_kesehatan(gemini_client, prompt_input)
-        saran_gemini = response_text # Gunakan saran baru
-        saran_baru_dibuat = True # Set flag bahwa saran baru telah dibuat
-
-        # HAPUS: Logika penyimpanan dan input pengguna di sini
+        saran_gemini = response_text
+        saran_baru_dibuat = True
 
     elif not saran_gemini and gemini_client is None:
         print("\nGemini API gagal diinisialisasi. Tidak bisa membuat saran fleksibel.")
-
-    # TAMPILKAN HASIL ANALISIS
     
     print("\n" + "="*60)
     print("HASIL ANALISIS KESEHATAN")
@@ -278,16 +260,12 @@ def analisis_console(gemini_client):
     print(f"Tekanan Darah\t: {int(data_pasien['sistol'])}/{int(data_pasien['diastol'])} mmHg")
     print(f"Diagnosa\t: {data_pasien['diagnosa']}")
     
-    
-    # Tampilkan saran yang sudah ada (baik dari load atau baru dibuat)
     print("\nSARAN FLEKSIBEL DARI GEMINI AI:")
     print("---------------------------------------")
     if saran_gemini:
         print(saran_gemini) 
     else:
         print("Saran Gemini belum tersedia.")
-        
-    # LOGIKA PENYIMPANAN DAN NOTIFIKASI BARU (SETELAH TAMPILAN SARAN)
     if saran_baru_dibuat and gemini_client is not None:
         print("\n--- PROSES PENYIMPANAN DATA ---")
         if database.update_saran(nomor_data, saran_gemini):
@@ -295,17 +273,15 @@ def analisis_console(gemini_client):
         else:
             print("❌ Gagal menyimpan saran baru ke database.")
         print("-------------------------------")
-    
     print("="*60)
 
 '''
 Hapus Data Pasien Console
 '''
 def delete_console():
-    """Delete patient record console"""
-    df = database.read()
+    list_pasien = database.read()
     
-    if len(df) == 0:
+    if len(list_pasien) == 0:
         print("\nTidak ada data pasien!")
         return
         
@@ -340,5 +316,3 @@ def delete_console():
             print("Gagal menghapus data!")
     else:
         print("Penghapusan dibatalkan.")
-    
-    # Tidak perlu input di sini karena akan dihandle oleh main()
