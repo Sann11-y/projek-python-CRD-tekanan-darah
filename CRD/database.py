@@ -95,7 +95,6 @@ def delete(indeks):
 Mengupdate kolom 'saran_gemini' untuk pasien tertentu berdasarkan indeks.
 '''
 def update_saran(indeks, saran_text):
-    """Update kolom saran_gemini untuk pasien tertentu berdasarkan indeks."""
     global df_pasien
     try:
         if 0 <= indeks < len(df_pasien):
