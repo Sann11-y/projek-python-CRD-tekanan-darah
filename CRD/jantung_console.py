@@ -1,7 +1,7 @@
 import os
 from google import genai
 from google.genai import types
-from . import database # Tetap impor database
+from . import database 
 
 '''
 Klassifikasi BMI dan Tekanan Darah

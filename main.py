@@ -3,7 +3,7 @@ import CRD
 import dotenv
 from google import genai
 
-# Variabel untuk sistem operasi
+
 sistem_operasi = os.name
 
 '''
@@ -13,7 +13,6 @@ Membaca API key dari file .env dan menginisialisasi klien Gemini.
 dotenv.load_dotenv("GeminiApi.env")
 try:
     client = genai.Client()
-    # print("Gemini Client ready.") # Hilangkan print untuk kerapihan
 except Exception as e:
     print(f"ERROR: Gagal inisialisasi klien Gemini. Pastikan API key sudah diatur. Detail: {e}")
     client = None
@@ -27,7 +26,7 @@ def opsi_buat_data_pasien():
     
     CRD.create_console()
     
-    input("\nTekan Enter untuk lanjut...") # Tambahkan input di sini agar tidak langsung kembali
+    input("\nTekan Enter untuk lanjut...") 
 
 '''
 3. Fungsi Utama Program
@@ -60,7 +59,6 @@ def main():
             CRD.read_console()
             input("Tekan Enter untuk lanjut...")
         elif pilihan_user == "3":
-            # Pass client ke analisis_console untuk pemanggilan API
             CRD.analisis_console(client) 
             input("Tekan Enter untuk lanjut...")
         elif pilihan_user == "4":

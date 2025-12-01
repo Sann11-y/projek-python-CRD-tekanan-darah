@@ -1,8 +1,20 @@
 import pandas as pd
-# Mengimpor dari modul core_console yang baru
 from .jantung_console import klasifikasi_bmi, klasifikasi_tekanan
 
-# Inisialisasi kolom
+'''
+Database Pandas DataFrame untuk menyimpan data pasien tekanan darah dan BMI.
+Kolom:
+- nama: Nama pasien
+- berat_badan: Berat badan dalam kg
+- tinggi_badan: Tinggi badan dalam cm
+- umur: Umur pasien dalam tahun
+- sistol: Tekanan darah sistol dalam mmHg
+- diastol: Tekanan darah diastol dalam mmHg
+- diagnosa: Hasil diagnosa tekanan darah
+- bmi: Indeks Massa Tubuh
+- kategori_bmi: Kategori BMI
+- saran_gemini: Saran Gemini AI
+'''
 KOLOM = [
     'nama', 'berat_badan', 'tinggi_badan', 
     'umur', 'sistol', 'diastol', 'diagnosa', 'bmi', 'kategori_bmi', 'saran_gemini'
@@ -10,6 +22,9 @@ KOLOM = [
 
 df_pasien = pd.DataFrame(columns=KOLOM)
 
+'''
+Inisialisasi DataFrame Pandas untuk menyimpan data pasien tekanan darah dan BMI.
+'''
 def init_console():
     """Initialize DataFrame"""
     global df_pasien
