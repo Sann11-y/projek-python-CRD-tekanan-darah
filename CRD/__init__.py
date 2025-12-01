@@ -8,6 +8,3 @@ from .jantung_console import (
     delete_console, 
     analisis_console
 )
-
-'''Impor Database Module'''
-from . import database

@@ -182,7 +182,10 @@ def read_console():
         kategori_bmi = str(baris['kategori_bmi'])[:12]
         
         # Logika Kolom Saran AI baru
-        saran_ai = "Ada" if baris['saran_gemini'] else "Kosong" 
+        if baris['saran_gemini']:
+            saran_ai = "Ada"
+        else:
+            saran_ai = "Kosong" 
         
         print(f"{indeks+1:3} | {nama:<20} | {bb:<6} | {tb:<6} | {bmi:<5} | {umur:<4} | {tekanan_darah:<12} | {diagnosa:<12} | {kategori_bmi:<12} | {saran_ai:<10}")
 
@@ -193,7 +196,6 @@ def read_console():
 Analisis Kesehatan Console & Integrasi Panggilan Gemini
 '''
 def analisis_console(gemini_client):
-    """Analyze patient health console & integrate Gemini call"""
     list_pasien = database.read()
     sistem_operasi = os.name 
 
@@ -280,7 +282,6 @@ Hapus Data Pasien Console
 '''
 def delete_console():
     list_pasien = database.read()
-    
     if len(list_pasien) == 0:
         print("\nTidak ada data pasien!")
         return
@@ -291,7 +292,6 @@ def delete_console():
         try:
             nomor_data = int(input("\nPilih nomor data yang akan dihapus: ")) - 1
             data_pasien = database.read(nomor_data)
-            
             if data_pasien is not None:
                 break
             else:
