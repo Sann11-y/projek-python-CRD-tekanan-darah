@@ -1,30 +1,17 @@
-'''Database Module
-Menyediakan fungsi CRUD untuk mengelola data pasien tekanan darah dan BMI menggunakan Pandas Data'''
+'''Pandas Module
+Menyediakan struktur data dan alat analisis data yang kuat untuk Python.'''
 import pandas as pd
 
 '''Fungsi dari jantung_console.py yang diperlukan'''
 from .jantung_console import klasifikasi_bmi, klasifikasi_tekanan
 
-'''
-Database Pandas DataFrame untuk menyimpan data pasien tekanan darah dan BMI.
-Kolom:
-- nama: Nama pasien
-- berat_badan: Berat badan dalam kg
-- tinggi_badan: Tinggi badan dalam cm
-- umur: Umur pasien dalam tahun
-- sistol: Tekanan darah sistol dalam mmHg
-- diastol: Tekanan darah diastol dalam mmHg
-- diagnosa: Hasil diagnosa tekanan darah
-- bmi: Indeks Massa Tubuh
-- kategori_bmi: Kategori BMI
-- saran_gemini: Saran Gemini AI
-'''
-KOLOM = [
+'''Inisialisasi Kolom DataFrame Pandas'''
+DATA = [
     'nama', 'berat_badan', 'tinggi_badan', 
     'umur', 'sistol', 'diastol', 'diagnosa', 'bmi', 'kategori_bmi', 'saran_gemini'
 ]
 
-df_pasien = pd.DataFrame(columns=KOLOM)
+df_pasien = pd.DataFrame(columns=DATA)
 
 '''
 Inisialisasi DataFrame Pandas untuk menyimpan data pasien tekanan darah dan BMI.
@@ -32,7 +19,7 @@ Inisialisasi DataFrame Pandas untuk menyimpan data pasien tekanan darah dan BMI.
 def init_console():
     """Inisialisasi database pandas DataFrame"""
     global df_pasien
-    df_pasien = pd.DataFrame(columns=KOLOM)
+    df_pasien = pd.DataFrame(columns=DATA)
     # print("Database Pandas DataFrame siap!") # Hilangkan print untuk kerapihan
 
 '''
