@@ -1,5 +1,6 @@
 import pandas as pd
-from .util import klasifikasi_bmi, klasifikasi_tekanan
+# Mengimpor dari modul core_console yang baru
+from .jantung_console import klasifikasi_bmi, klasifikasi_tekanan
 
 # Inisialisasi kolom
 KOLOM = [
@@ -13,14 +14,15 @@ def init_console():
     """Initialize DataFrame"""
     global df_pasien
     df_pasien = pd.DataFrame(columns=KOLOM)
-    print("Database Pandas DataFrame siap!")
+    # print("Database Pandas DataFrame siap!") # Hilangkan print untuk kerapihan
 
 def create(nama, bb, tb, umur, sistol, diastol):
     """Create new patient record"""
     global df_pasien
     try:
         diagnosa = klasifikasi_tekanan(umur, sistol, diastol)
-        bmi = bb / ((tb/100) ** 2)
+        # Konversi cm ke meter saat perhitungan BMI
+        bmi = bb / ((tb/100) ** 2) 
         kategori_bmi = klasifikasi_bmi(bmi)
         
         df_pasien.loc[len(df_pasien)] = {
@@ -33,7 +35,7 @@ def create(nama, bb, tb, umur, sistol, diastol):
             'diagnosa': diagnosa,
             'bmi': round(bmi, 2),
             'kategori_bmi': kategori_bmi,
-            'saran_gemini': ""
+            'saran_gemini': "" # Kosongkan saran saat create
         }
         return True
     except Exception as e:
