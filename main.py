@@ -3,6 +3,7 @@ import CRD
 import dotenv
 from google import genai
 from google.genai import types
+import sys
 
 # Variabel untuk sistem operasi
 sistem_operasi = os.name
@@ -24,27 +25,22 @@ def rekomendasi_kesehatan (client: genai.Client , user_input: str) -> str:
     Memberikan rekomendasi kesehatan atau saran berdasarkan input pengguna
     menggunakan model Gemini.
     """
-    # Prompt untuk mengatur perilaku model
     system_prompt = """
-    Anda adalah asisten informasi kesehatan yang sangat profesional dan berhati-hati.
+    Anda adalah asisten informasi kesehatan yang sangat ringkas dan berhati-hati.
     Tugas Anda adalah:
     1. Memberikan analisis kesehatan ringkas berdasarkan data pasien.
     2. Memberikan TEPAT 3 rekomendasi kesehatan dasar yang relevan dan tidak bertele-tele.
     3. Format respons harus rapi dan mudah dibaca (gunakan list/bullet point untuk saran).
     4. Selalu ingatkan untuk konsultasi ke profesional medis.
     5. JIKA INPUT PENGGUNA TIDAK TERKAIT DENGAN KESEHATAN, JAWAB DENGAN TEGAS: "Input anda di luar konteks kesehatan. Silahkan masukan pertanyaan yang berhubungan dengan kesehatan."
-    6. Menyapa pengguna dengan nama dan menjaga gaya bahasa yang profesional.
-    7. Buat Hasil yang singkat, padat, dan jelas, dan rapi
     """
     
     print(f'memproses input: "{user_input[:50]}..." dengan Gemini...')
     try:
-        # Buat konfigurasi untuk System Instruction
         config = types.GenerateContentConfig(
             system_instruction=system_prompt
         )
 
-        # Panggil API dengan 'config'
         response = client.models.generate_content(
             model='gemini-2.5-flash',
             contents = user_input,
@@ -66,7 +62,6 @@ def panggil_saran_pasien_terakhir():
     untuk analisis dan saran, lalu mencetaknya.
     """
     
-    # Periksa inisialisasi client API
     if client is None:
         print("\nGemini API gagal diinisialisasi. Cek kunci API Anda.")
         input("Tekan Enter untuk lanjut...")
@@ -78,7 +73,6 @@ def panggil_saran_pasien_terakhir():
         print("\nData Pasien Kosong. Tidak ada data untuk dianalisis.")
         return
 
-    # Ambil data pasien terakhir
     try:
         data_pasien = df.iloc[-1] 
         nama = data_pasien.get('nama', 'Pasien Tidak Diketahui') 
@@ -89,7 +83,6 @@ def panggil_saran_pasien_terakhir():
         berat = data_pasien.get('berat_badan', 'N/A')
         tinggi = data_pasien.get('tinggi_badan', 'N/A')
         
-        # Prompt yang merangkum data pasien untuk dianalisis
         data_string = (
             f"Nama: {nama}\n"
             f"Tekanan Darah: {sistolik}/{diastolik} mmHg\n"
@@ -97,7 +90,6 @@ def panggil_saran_pasien_terakhir():
             f"Berat: {berat} kg, Tinggi: {tinggi} m"
         )
 
-        # Input yang dikirimkan ke fungsi rekomendasi_kesehatan()
         prompt_input = (
             f"Data Pasien Baru:\n"
             f"{data_string}\n"
@@ -110,18 +102,16 @@ def panggil_saran_pasien_terakhir():
         print("-" * 60)
         print(f"Menganalisis data pasien '{nama}'...")
 
-        # Panggil fungsi rekomendasi_kesehatan
         response_text = rekomendasi_kesehatan(client, prompt_input)
         
         print("\n[Gemini AI]:")
         print(response_text)
         print("-" * 60)
         
-        # LOGIKA PENYIMPANAN SARAN
         index_pasien_terakhir = len(df) - 1
         
         if CRD.database.update_saran(index_pasien_terakhir, response_text):
-            print("Saran Gemini telah **disimpan** ke database!")
+            print("Saran Gemini telah disimpan ke database!")
         else:
             print("Gagal menyimpan saran ke database.")
             
@@ -138,10 +128,8 @@ def panggil_saran_pasien_terakhir():
 def opsi_buat_data_pasien():
     """Menangani seluruh alur pembuatan data, pertanyaan saran, dan pemanggilan Gemini."""
     
-    # Buat Data Pasien
     CRD.create_console()
     
-    # Logika Saran Fleksibel
     if not CRD.database.read().empty:
         print("-" * 60)
         saran_choice = input("Data berhasil disimpan. Apakah Anda memerlukan saran kesehatan fleksibel dari Gemini AI? (y/n): ")
@@ -150,16 +138,13 @@ def opsi_buat_data_pasien():
         else:
             input("Tekan Enter untuk lanjut...")
     else:
-        # Jika create_console gagal
         input("Tekan Enter untuk lanjut...")
 
 
 def main():
-    # Initialize DataFrame
     CRD.init_console()
     
     while True:
-        # Clear screen
         os.system("cls" if sistem_operasi == "nt" else "clear")
         
         print("-" * 60)
@@ -172,7 +157,6 @@ def main():
         print("5. Keluar")
         print("-" * 60)
         
-        # Show current data count
         df = CRD.database.read()
         print(f"Data saat ini: {len(df)} pasien" if len(df) > 0 else "Data saat ini: Kosong")
         print("-" * 60)
