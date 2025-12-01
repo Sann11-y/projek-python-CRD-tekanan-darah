@@ -137,11 +137,11 @@ def analisis_console():
     print(f"Tekanan Darah\t: {int(data_pasien['sistol'])}/{int(data_pasien['diastol'])} mmHg")
     print(f"Diagnosa\t: {data_pasien['diagnosa']}")
     
-    saran_tekanan, saran_bmi = saran_kesehatan(data_pasien['diagnosa'], data_pasien['bmi'])
     
-    print(f"\nSARAN KESEHATAN (Standar):")
-    print(f"• Tekanan Darah: {saran_tekanan}")
-    print(f"• BMI: {saran_bmi}")
+    # saran_tekanan, saran_bmi = saran_kesehatan(data_pasien['diagnosa'], data_pasien['bmi'])
+    # print(f"\nSARAN KESEHATAN (Standar):")
+    # print(f"• Tekanan Darah: {saran_tekanan}")
+    # print(f"• BMI: {saran_bmi}")
     
     # Integrasi Saran Gemini
     saran_gemini = data_pasien.get('saran_gemini') 
