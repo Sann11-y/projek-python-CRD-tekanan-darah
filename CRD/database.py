@@ -1,4 +1,8 @@
+'''Database Module
+Menyediakan fungsi CRUD untuk mengelola data pasien tekanan darah dan BMI menggunakan Pandas Data'''
 import pandas as pd
+
+'''Fungsi dari jantung_console.py yang diperlukan'''
 from .jantung_console import klasifikasi_bmi, klasifikasi_tekanan
 
 '''
@@ -26,14 +30,17 @@ df_pasien = pd.DataFrame(columns=KOLOM)
 Inisialisasi DataFrame Pandas untuk menyimpan data pasien tekanan darah dan BMI.
 '''
 def init_console():
-    """Initialize DataFrame"""
+    """Inisialisasi database pandas DataFrame"""
     global df_pasien
     df_pasien = pd.DataFrame(columns=KOLOM)
     # print("Database Pandas DataFrame siap!") # Hilangkan print untuk kerapihan
 
+'''
+Menambahkan data pasien ke dalam DataFrame Pandas.
+'''
 def create(nama, bb, tb, umur, sistol, diastol):
-    """Create new patient record"""
     global df_pasien
+    
     try:
         diagnosa = klasifikasi_tekanan(umur, sistol, diastol)
         # Konversi cm ke meter saat perhitungan BMI
@@ -57,16 +64,22 @@ def create(nama, bb, tb, umur, sistol, diastol):
         print(f"Error: {e}")
         return False
 
+'''
+Membaca data pasien dari DataFrame Pandas.
+Jika indeks diberikan, kembalikan data pasien sebagai dict.
+Jika tidak, kembalikan DataFrame.
+'''
 def read(indeks=None):
-    """Read patient data - returns dict if index provided, DataFrame otherwise"""
     if indeks is not None:
         if 0 <= indeks < len(df_pasien):
             return df_pasien.iloc[indeks].to_dict()
         return None
     return df_pasien
 
+'''
+Menghapus data pasien dari DataFrame Pandas berdasarkan indeks.
+'''
 def delete(indeks):
-    """Delete patient data"""
     global df_pasien
     try:
         if 0 <= indeks < len(df_pasien):
@@ -78,7 +91,9 @@ def delete(indeks):
         print(f"Error: {e}")
         return False
 
-
+'''
+Mengupdate kolom 'saran_gemini' untuk pasien tertentu berdasarkan indeks.
+'''
 def update_saran(indeks, saran_text):
     """Update kolom saran_gemini untuk pasien tertentu berdasarkan indeks."""
     global df_pasien

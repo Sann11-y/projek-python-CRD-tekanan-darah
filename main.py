@@ -3,7 +3,9 @@ import CRD
 import dotenv
 from google import genai
 
-
+'''Deteksi Sistem Operasi
+Mendeteksi sistem operasi untuk penentuan platform pengguna.
+'''
 sistem_operasi = os.name
 
 '''
@@ -30,10 +32,13 @@ def opsi_buat_data_pasien():
 
 '''
 3. Fungsi Utama Program
-Menjalankan loop utama program untuk interaksi pengguna.'''
+Menjalankan loop utama program untuk interaksi pengguna.
+'''
 def main():
+    """Main program loop"""
     CRD.init_console()
     
+    """Loop utama program"""
     while True:
         os.system("cls" if sistem_operasi == "nt" else "clear")
         
@@ -71,5 +76,8 @@ def main():
             print("Opsi tidak valid!")
             input("Tekan Enter untuk lanjut...")
 
+'''
+Jalankan Program Utama
+'''
 if __name__ == "__main__":
     main()

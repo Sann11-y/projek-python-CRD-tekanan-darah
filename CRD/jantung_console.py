@@ -1,13 +1,24 @@
+'''os Module
+Menyediakan fungsi untuk berinteraksi dengan sistem operasi.'''
 import os
+
+'''dotenv Module
+Membaca variabel lingkungan dari file .env.'''
 from google import genai
+
+'''genai Module
+SDK untuk berinteraksi dengan Google Gemini AI.'''
 from google.genai import types
+
+'''Database Module
+Menyediakan fungsi CRUD untuk mengelola data pasien tekanan darah dan BMI menggunakan Pandas Data'''
 from . import database 
 
 '''
 Klassifikasi BMI dan Tekanan Darah
-Fungsi-fungsi untuk mengklasifikasikan BMI dan tekanan darah berdasarkan standar medis'''
+Fungsi-fungsi untuk mengklasifikasikan BMI dan tekanan darah berdasarkan standar medis
+'''
 def klasifikasi_bmi(bmi):
-    """Classify BMI into category"""
     if bmi < 18.5:
         return "Kurus"
     elif 18.5 <= bmi <= 24.9:
@@ -16,9 +27,9 @@ def klasifikasi_bmi(bmi):
         return "Gemuk"
     else:
         return "Obesitas"
-    
+
+'''Fungsi Klasifikasi Tekanan Darah Berdasarkan Umur'''
 def klasifikasi_tekanan(umur, sistol, diastol):
-    """Classify blood pressure based on age"""
     if 6 <= umur <= 12:
         if sistol < 96 or diastol < 55: 
             return "Hipotensi"
@@ -85,8 +96,8 @@ def rekomendasi_kesehatan (client: genai.Client , user_input: str) -> str:
         return 'Maaf terjadi masalah teknis saat memproses permintaan Anda.'
 
 '''
-Fungsi Konsol untuk CRAD Data Pasien
-Fungsi-fungsi untuk membuat, membaca, menganalisis, dan menghapus data pasien.
+Buat Data Pasien Console
+Menangani alur pembuatan data pasien melalui console.
 '''
 def create_console():
     """Create new patient console"""
@@ -150,6 +161,9 @@ def create_console():
     else:
         print("\nGagal menambah data!")
 
+'''
+Tampilkan Semua Data Pasien Console
+'''
 def read_console():
     """Display all patients console"""
     df = database.read()
@@ -185,7 +199,9 @@ def read_console():
     print("="*115) 
     print(f"Total: {len(df)} pasien")
 
-
+'''
+Analisis Kesehatan Console & Integrasi Panggilan Gemini
+'''
 def analisis_console(gemini_client):
     """Analyze patient health console & integrate Gemini call"""
     df = database.read()
@@ -281,6 +297,10 @@ def analisis_console(gemini_client):
         print("-------------------------------")
     
     print("="*60)
+
+'''
+Hapus Data Pasien Console
+'''
 def delete_console():
     """Delete patient record console"""
     df = database.read()
