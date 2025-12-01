@@ -27,8 +27,7 @@ def klasifikasi_tekanan(umur, sistol, diastol):
         elif sistol > 131 or diastol > 62: 
             return "Hipertensi"
         else: 
-            return "Normal" 
-            
+            return "Normal"   
     elif 13 <= umur <= 18:
         if sistol < 112 or diastol < 62: 
             return "Hipotensi"
@@ -36,17 +35,14 @@ def klasifikasi_tekanan(umur, sistol, diastol):
             return "Hipertensi"
         else: 
             return "Normal"
-            
     elif 19 <= umur <= 65:
-        # Ubah urutan cek: Cek Hipertensi dulu (Sentuhan Manusiawi)
         if sistol > 120 or diastol > 80: 
             return "Hipertensi"
-        elif sistol < 90 or diastol < 60: # Cek Hipotensi
+        elif sistol < 90 or diastol < 60: 
             return "Hipotensi"
         else:
-            return "Normal" # Jika lolos kedua cek di atas
-            
-    else: # > 65 (Ubah urutan cek di sini juga)
+            return "Normal" 
+    else: 
         if sistol > 150 or diastol > 90: 
             return "Hipertensi"
         elif sistol < 90 or diastol < 60: 
@@ -95,7 +91,6 @@ Buat Data Pasien Console
 Menangani alur pembuatan data pasien melalui console.
 '''
 def create_console():
-    """Create new patient console"""
     print("\n" + "="*50)
     print("TAMBAH DATA PASIEN")
     print("="*50)
@@ -197,8 +192,6 @@ Analisis Kesehatan Console & Integrasi Panggilan Gemini
 '''
 def analisis_console(gemini_client):
     list_pasien = database.read()
-    sistem_operasi = os.name 
-
     if len(list_pasien) == 0:
         print("\nTidak ada data pasien!")
         return
