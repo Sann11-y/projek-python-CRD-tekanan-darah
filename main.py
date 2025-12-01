@@ -28,20 +28,23 @@ def opsi_buat_data_pasien():
 def main():
     CRD.init_console()
     while True:
-        os.system("cls" if sistem_operasi == "nt" else "clear")
+        os.system('cls' if sistem_operasi == 'nt' else 'clear')
         
         print("-" * 60)
         print("SISTEM MONITORING KESEHATAN TEKANAN DARAH & BMI".center(60))
         print("-" * 60)
         print("1. Buat Data Pasien Baru")
         print("2. Lihat Data Pasien") 
-        print("3. Analisis Kesehatan (Otomatis buat saran Gemini)") # Update Deskripsi
+        print("3. Analisis Kesehatan Pasien dengan Gemini AI") 
         print("4. Hapus Data Pasien")
         print("5. Keluar")
         print("-" * 60)
         
         list_pasien = CRD.database.read()
-        print(f"Data saat ini: {len(list_pasien)} pasien" if len(list_pasien) > 0 else "Data saat ini: Kosong")
+        if len(list_pasien) > 0:
+            print(f"Data saat ini: {len(list_pasien)} pasien")
+        else:
+            print("Data saat ini: Kosong")
         print("-" * 60)
 
         pilihan_user = input("Pilih opsi: ")
