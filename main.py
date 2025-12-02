@@ -6,7 +6,7 @@ from google import genai
 '''Deteksi Sistem Operasi
 Mendeteksi sistem operasi untuk penentuan platform pengguna.
 '''
-sistem_operasi = os.name
+sistemOperasi = os.name
 
 dotenv.load_dotenv("GeminiApi.env")
 try:
@@ -18,17 +18,17 @@ except Exception as e:
 2. Fungsi Opsi Pembuatan Data Pasien
 Menangani alur pembuatan data pasien tanpa memanggil Gemini.
 '''
-def opsi_buat_data_pasien():
+def opsiBuatDataPasien():
     """Menangani alur pembuatan data tanpa memanggil Gemini."""
     
-    CRD.create_console()
+    CRD.buatData()
     
     input("\nTekan Enter untuk lanjut...") 
 
 def main():
-    CRD.init_console()
+    CRD.inisialisasiData() 
     while True:
-        os.system('cls' if sistem_operasi == 'nt' else 'clear')
+        os.system('cls' if sistemOperasi == 'nt' else 'clear')
         
         print("-" * 60)
         print("SISTEM MONITORING KESEHATAN TEKANAN DARAH & BMI".center(60))
@@ -40,26 +40,26 @@ def main():
         print("5. Keluar")
         print("-" * 60)
         
-        list_pasien = CRD.database.read()
-        if len(list_pasien) > 0:
-            print(f"Data saat ini: {len(list_pasien)} pasien")
+        listPasien = CRD.database.read()
+        if len(listPasien) > 0:
+            print(f"Data saat ini: {len(listPasien)} pasien")
         else:
             print("Data saat ini: Kosong")
         print("-" * 60)
 
-        pilihan_user = input("Pilih opsi: ")
+        pilihanUser = input("Pilih opsi: ")
 
-        if pilihan_user == "1":
-            opsi_buat_data_pasien()
-        elif pilihan_user == "2":
-            CRD.read_console()
+        if pilihanUser == "1":
+            opsiBuatDataPasien()
+        elif pilihanUser == "2":
+            CRD.lihatData() 
             input("Tekan Enter untuk lanjut...")
-        elif pilihan_user == "3":
-            CRD.analisis_console(client) 
+        elif pilihanUser == "3":
+            CRD.analisisData(client)
             input("Tekan Enter untuk lanjut...")
-        elif pilihan_user == "4":
-            CRD.delete_console()
-        elif pilihan_user == "5":
+        elif pilihanUser == "4":
+            CRD.hapusData() 
+        elif pilihanUser == "5":
             print("\nTerima kasih! Program selesai.")
             print("Catatan: Semua data akan hilang karena disimpan di memory saja.")
             break

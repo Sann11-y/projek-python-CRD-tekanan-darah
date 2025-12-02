@@ -1,10 +1,10 @@
 '''Inisialisasi Modul CRD'''
-from .database import init_console
+from .database import inisialisasiData
 
-'''Impor Fungsi Konsol dari jantung_console.py'''
-from .jantung_console import (
-    read_console, 
-    create_console, 
-    delete_console, 
-    analisis_console
+'''Impor Fungsi Interaksi dari interaksi_data.py'''
+from .interaksiData import (
+    lihatData, 
+    buatData,     
+    hapusData,    
+    analisisData  
 )

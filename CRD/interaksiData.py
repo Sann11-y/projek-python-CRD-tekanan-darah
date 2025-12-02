@@ -1,5 +1,3 @@
-import os
-
 from google import genai
 from google.genai import types
 
@@ -9,7 +7,7 @@ from . import database
 Klassifikasi BMI dan Tekanan Darah
 Fungsi-fungsi untuk mengklasifikasikan BMI dan tekanan darah berdasarkan standar medis
 '''
-def klasifikasi_bmi(bmi):
+def klasifikasiBmi(bmi):
     if bmi < 18.5:
         return "Kurus"
     elif 18.5 <= bmi <= 24.9:
@@ -20,7 +18,7 @@ def klasifikasi_bmi(bmi):
         return "Obesitas"
 
 '''Fungsi Klasifikasi Tekanan Darah Berdasarkan Umur'''
-def klasifikasi_tekanan(umur, sistol, diastol):
+def klasifikasiTekanan(umur, sistol, diastol):
     if 6 <= umur <= 12:
         if sistol < 96 or diastol < 55: 
             return "Hipotensi"
@@ -54,12 +52,12 @@ def klasifikasi_tekanan(umur, sistol, diastol):
 Fungsi Rekomendasi Kesehatan dengan Gemini AI
 Menghasilkan rekomendasi kesehatan berdasarkan data pasien menggunakan model Gemini.
 '''
-def rekomendasi_kesehatan (client: genai.Client , user_input: str) -> str:
+def rekomendasiKesehatan (client: genai.Client , userInput: str) -> str:
     """
     Memberikan rekomendasi kesehatan atau saran berdasarkan input pengguna
     menggunakan model Gemini. (Dipindahkan dari main.py)
     """
-    system_prompt = """
+    systemPrompt = """
     Anda adalah asisten informasi kesehatan yang sangat ringkas dan berhati-hati.
     Tugas Anda adalah:
     1. Memberikan analisis kesehatan ringkas berdasarkan data pasien.
@@ -72,12 +70,12 @@ def rekomendasi_kesehatan (client: genai.Client , user_input: str) -> str:
     print(f'Memproses data dengan Gemini...')
     try:
         config = types.GenerateContentConfig(
-            system_instruction=system_prompt
+            system_instruction=systemPrompt
         )
 
         response = client.models.generate_content(
             model='gemini-2.5-flash',
-            contents = user_input,
+            contents = userInput,
             config=config
         )
         return response.text
@@ -87,10 +85,10 @@ def rekomendasi_kesehatan (client: genai.Client , user_input: str) -> str:
         return 'Maaf terjadi masalah teknis saat memproses permintaan Anda.'
 
 '''
-Buat Data Pasien Console
-Menangani alur pembuatan data pasien melalui console.
+Buat Data Pasien (CREATE)
+Menangani alur pembuatan data pasien melalui input pengguna.
 '''
-def create_console():
+def buatData():
     print("\n" + "="*50)
     print("TAMBAH DATA PASIEN")
     print("="*50)
@@ -151,12 +149,12 @@ def create_console():
         print("\nGagal menambah data!")
 
 '''
-Tampilkan Semua Data Pasien Console
+Tampilkan Semua Data Pasien (READ)
 '''
-def read_console():
-    list_pasien = database.read() 
+def lihatData():
+    listPasien = database.read()
     
-    if len(list_pasien) == 0:
+    if len(listPasien) == 0:
         print("\nTidak ada data pasien!")
         return
 
@@ -166,104 +164,103 @@ def read_console():
     print("No  | Nama                 | BB(kg) | TB(cm) | BMI   | Umur | Tekanan      | Diagnosa     | Kategori BMI | Saran AI")
     print("-"*115) 
     
-    for indeks, baris in enumerate(list_pasien):
+    for indeks, baris in enumerate(listPasien):
         nama = str(baris['nama'])[:20]
-        bb = f"{baris['berat_badan']:.1f}"
-        tb = f"{baris['tinggi_badan']:.1f}"
+        bb = f"{baris['beratBadan']:.1f}"
+        tb = f"{baris['tinggiBadan']:.1f}"
         bmi = f"{baris['bmi']:.1f}"
         umur = str(int(baris['umur']))
-        tekanan_darah = f"{int(baris['sistol'])}/{int(baris['diastol'])} mmHg"
+        tekananDarah = f"{int(baris['sistol'])}/{int(baris['diastol'])} mmHg"
         diagnosa = str(baris['diagnosa'])[:12]
-        kategori_bmi = str(baris['kategori_bmi'])[:12]
+        kategoriBmi = str(baris['kategoriBmi'])[:12]
         
-        # Logika Kolom Saran AI baru
-        if baris['saran_gemini']:
-            saran_ai = "Ada"
+        if baris['saranGemini']:
+            saranAi = "Ada"
         else:
-            saran_ai = "Kosong" 
+            saranAi = "Kosong"
         
-        print(f"{indeks+1:3} | {nama:<20} | {bb:<6} | {tb:<6} | {bmi:<5} | {umur:<4} | {tekanan_darah:<12} | {diagnosa:<12} | {kategori_bmi:<12} | {saran_ai:<10}")
+        print(f"{indeks+1:3} | {nama:<20} | {bb:<6} | {tb:<6} | {bmi:<5} | {umur:<4} | {tekananDarah:<12} | {diagnosa:<12} | {kategoriBmi:<12} | {saranAi:<10}")
 
     print("="*115) 
-    print(f"Total: {len(list_pasien)} pasien")
+    print(f"Total: {len(listPasien)} pasien")
 
 '''
-Analisis Kesehatan Console & Integrasi Panggilan Gemini
+Analisis Kesehatan & Integrasi Panggilan Gemini (ANALYZE)
 '''
-def analisis_console(gemini_client):
-    list_pasien = database.read()
-    if len(list_pasien) == 0:
+def analisisData(geminiClient):
+    listPasien = database.read()
+    if len(listPasien) == 0:
         print("\nTidak ada data pasien!")
         return
         
-    read_console()
+    lihatData()
     
     while True:
         try:
-            nomor_data = int(input("\nPilih nomor data untuk dianalisis: ")) - 1
-            data_pasien = database.read(nomor_data)
+            nomorData = int(input("\nPilih nomor data untuk dianalisis: ")) - 1
+            dataPasien = database.read(nomorData)
             
-            if data_pasien is not None:
+            if dataPasien is not None:
                 break
             else:
                 print("Nomor tidak valid!")
         except ValueError:
             print("Input harus angka!")
     
-    saran_gemini = data_pasien.get('saran_gemini') 
-    saran_baru_dibuat = False
+    saranGemini = dataPasien.get('saranGemini')
+    saranBaruDibuat = False
 
-    # JIKA SARAN BELUM ADA, PANGGIL GEMINI
-    if not saran_gemini and gemini_client is not None:
+    # JIKA SARAN BELUM ADA, MAKA PANGGIL GEMINI UNTUK MEMBUAT SARAN
+    if not saranGemini and geminiClient is not None:
         
-        nama = data_pasien.get('nama', 'Pasien Tidak Diketahui') 
-        sistolik = data_pasien.get('sistol', 'N/A')
-        diastolik = data_pasien.get('diastol', 'N/A')
-        bmi = data_pasien.get('bmi', 'N/A')
-        berat = data_pasien.get('berat_badan', 'N/A')
-        tinggi = data_pasien.get('tinggi_badan', 'N/A')
+        nama = dataPasien.get('nama', 'Pasien Tidak Diketahui')
+        sistolik = dataPasien.get('sistol', 'N/A')
+        diastolik = dataPasien.get('diastol', 'N/A')
+        bmi = dataPasien.get('bmi', 'N/A')
+        berat = dataPasien.get('beratBadan', 'N/A')
+        tinggi = dataPasien.get('tinggiBadan', 'N/A')
         
-        data_string = (
+        dataString = (
             f"Nama: {nama}\n"
             f"Tekanan Darah: {sistolik}/{diastolik} mmHg\n"
             f"BMI: {bmi}\n"
             f"Berat: {berat} kg, Tinggi: {tinggi} cm"
         )
 
-        prompt_input = (
+        promptInput = (
             f"Data Pasien:\n"
-            f"{data_string}\n"
+            f"{dataString}\n"
             f"Berdasarkan data di atas, berikan analisis singkat dan TEPAT 3 saran kesehatan."
         )
         print("\n" + "-" * 60)
         print("MENGANALISIS DATA PASIEN DENGAN GEMINI AI".center(60))
         print("-" * 60)
-        response_text = rekomendasi_kesehatan(gemini_client, prompt_input)
-        saran_gemini = response_text
-        saran_baru_dibuat = True
+        responseText = rekomendasiKesehatan(geminiClient, promptInput)
+        saranGemini = responseText
+        saranBaruDibuat = True
 
-    elif not saran_gemini and gemini_client is None:
+    elif not saranGemini and geminiClient is None:
         print("\nGemini API gagal diinisialisasi. Tidak bisa membuat saran fleksibel.")
     
     print("\n" + "="*60)
     print("HASIL ANALISIS KESEHATAN")
     print("="*60)
-    print(f"Nama Pasien\t: {data_pasien['nama']}")
-    print(f"Umur\t\t: {int(data_pasien['umur'])} tahun") 
-    print(f"Berat/Tinggi\t: {data_pasien['berat_badan']} kg / {data_pasien['tinggi_badan']} cm")
-    print(f"BMI\t\t: {data_pasien['bmi']:.1f}")
-    print(f"Tekanan Darah\t: {int(data_pasien['sistol'])}/{int(data_pasien['diastol'])} mmHg")
-    print(f"Diagnosa\t: {data_pasien['diagnosa']}")
+    print(f"Nama Pasien\t: {dataPasien['nama']}")
+    print(f"Umur\t\t: {int(dataPasien['umur'])} tahun") 
+    print(f"Berat/Tinggi\t: {dataPasien['beratBadan']} kg / {dataPasien['tinggiBadan']} cm")
+    print(f"BMI\t\t: {dataPasien['bmi']:.1f}")
+    print(f"Tekanan Darah\t: {int(dataPasien['sistol'])}/{int(dataPasien['diastol'])} mmHg")
+    print(f"Diagnosa\t: {dataPasien['diagnosa']}")
     
     print("\nSARAN FLEKSIBEL DARI GEMINI AI:")
     print("---------------------------------------")
-    if saran_gemini:
-        print(saran_gemini) 
+    if saranGemini:
+        print(saranGemini)
     else:
         print("Saran Gemini belum tersedia.")
-    if saran_baru_dibuat and gemini_client is not None:
+    if saranBaruDibuat and geminiClient is not None:
         print("\n--- PROSES PENYIMPANAN DATA ---")
-        if database.update_saran(nomor_data, saran_gemini):
+        if database.updateSaran(nomorData, saranGemini):
             print("✅ Saran Gemini baru telah disimpan otomatis ke database.")
         else:
             print("❌ Gagal menyimpan saran baru ke database.")
@@ -271,38 +268,38 @@ def analisis_console(gemini_client):
     print("="*60)
 
 '''
-Hapus Data Pasien Console
+Hapus Data Pasien (DELETE)
 '''
-def delete_console():
-    list_pasien = database.read()
-    if len(list_pasien) == 0:
+def hapusData():
+    listPasien = database.read()
+    if len(listPasien) == 0:
         print("\nTidak ada data pasien!")
         return
         
-    read_console()
+    lihatData()
     
     while True:
         try:
-            nomor_data = int(input("\nPilih nomor data yang akan dihapus: ")) - 1
-            data_pasien = database.read(nomor_data)
-            if data_pasien is not None:
+            nomorData = int(input("\nPilih nomor data yang akan dihapus: ")) - 1
+            dataPasien = database.read(nomorData)
+            if dataPasien is not None:
                 break
             else:
                 print("Nomor tidak valid!")
         except ValueError:
             print("Input harus angka!")
     
-    nama = data_pasien['nama']
+    nama = dataPasien['nama']
     
     print(f"\nKONFIRMASI PENGHAPUSAN")
     print(f"Data yang akan dihapus: {nama}")
-    print(f"Umur: {int(data_pasien['umur'])} tahun")
-    print(f"Tekanan Darah: {int(data_pasien['sistol'])}/{int(data_pasien['diastol'])} mmHg")
+    print(f"Umur: {int(dataPasien['umur'])} tahun")
+    print(f"Tekanan Darah: {int(dataPasien['sistol'])}/{int(dataPasien['diastol'])} mmHg")
     
     konfirmasi = input("\nApakah Anda yakin? (y/n): ").lower()
     
     if konfirmasi == 'y':
-        if database.delete(nomor_data):
+        if database.delete(nomorData):
             print("Data berhasil dihapus!")
             print(f"Sisa data: {len(database.read())} pasien")
         else:
