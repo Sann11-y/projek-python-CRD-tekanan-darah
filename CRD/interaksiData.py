@@ -165,14 +165,14 @@ def lihatData():
     print("-"*115) 
     
     for indeks, baris in enumerate(listPasien):
-        nama = str(baris['nama'])[:20]
+        nama = baris['nama'][:20]
         bb = f"{baris['beratBadan']:.1f}"
         tb = f"{baris['tinggiBadan']:.1f}"
         bmi = f"{baris['bmi']:.1f}"
         umur = str(int(baris['umur']))
         tekananDarah = f"{int(baris['sistol'])}/{int(baris['diastol'])} mmHg"
-        diagnosa = str(baris['diagnosa'])[:12]
-        kategoriBmi = str(baris['kategoriBmi'])[:12]
+        diagnosa = baris['diagnosa'][:12]
+        kategoriBmi = baris['kategoriBmi'][:12]
         
         if baris['saranGemini']:
             saranAi = "Ada"
@@ -213,12 +213,12 @@ def analisisData(geminiClient):
     # JIKA SARAN BELUM ADA, MAKA PANGGIL GEMINI UNTUK MEMBUAT SARAN
     if not saranGemini and geminiClient is not None:
         
-        nama = dataPasien.get('nama', 'Pasien Tidak Diketahui')
-        sistolik = dataPasien.get('sistol', 'N/A')
-        diastolik = dataPasien.get('diastol', 'N/A')
-        bmi = dataPasien.get('bmi', 'N/A')
-        berat = dataPasien.get('beratBadan', 'N/A')
-        tinggi = dataPasien.get('tinggiBadan', 'N/A')
+        nama = dataPasien['nama']
+        sistolik = dataPasien['sistol']
+        diastolik = dataPasien['diastol']
+        bmi = dataPasien['bmi']
+        berat = dataPasien['beratBadan']
+        tinggi = dataPasien['tinggiBadan']
         
         dataString = (
             f"Nama: {nama}\n"
