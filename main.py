@@ -14,17 +14,7 @@ try:
 except Exception as e:
     print(f"ERROR: Gagal inisialisasi klien Gemini. Pastikan API key sudah diatur. Detail: {e}")
     client = None
-'''
-2. Fungsi Opsi Pembuatan Data Pasien
-Menangani alur pembuatan data pasien tanpa memanggil Gemini.
-'''
-def opsiBuatDataPasien():
-    """Menangani alur pembuatan data tanpa memanggil Gemini."""
-    
-    CRD.buatData()
-    
-    input("\nTekan Enter untuk lanjut...") 
-
+ 
 def main():
     CRD.inisialisasiData() 
     while True:
@@ -50,7 +40,8 @@ def main():
         pilihanUser = input("Pilih opsi: ")
 
         if pilihanUser == "1":
-            opsiBuatDataPasien()
+            CRD.buatData() 
+            input("Tekan Enter untuk lanjut...")
         elif pilihanUser == "2":
             CRD.lihatData() 
             input("Tekan Enter untuk lanjut...")
