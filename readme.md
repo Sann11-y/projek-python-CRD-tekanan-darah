@@ -41,7 +41,7 @@ Program ini dapat menghitung BMI berdasarkan berat badan dan tinggi badan yang d
 
 * **Indikasi Penyakit:** Memberikan indikasi penyakit berdasarkan data tekanan darah dan BMI yang dimasukkan.
 
-* **Data Riwayat:** Menyimpan riwayat data untuk analisis jangka panjang.
+* **Data Riwayat:** Menyimpan riwayat data untuk analisis berkelanjutan.
 
 * **Saran Kesehatan:** Memberikan saran kesehatan yang relevan dari data pengguna dan berbasis AI.
 
