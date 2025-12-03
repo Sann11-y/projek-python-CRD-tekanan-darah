@@ -1,35 +1,52 @@
 # Sistem monitoring tekanan darah darah dan BMI 
 
-## 1. Penjelasan Program 
-
-
-## 2. Fitur Program
-
-
-## 3. Keunggulan Program
-
-
-## 4. Kontributor
+## Daftar Isi
+* [1. Penjelasan Program ](#1-penjelasan-program)
+* [2. Fitur Program ](#2-fitur-program)
+* [3. Keunggulan Program ](#3-keunggulan-program)
+* [4. Kontributor ](#4-kontributor)
+* [5. Daftar Pustaka ](#5-daftar-pustaka)
 
 
 
-
-1. Penjelasan Program
+## 1. Penjelasan Program
 Program ini adalah sistem monitoring tekanan darah dan indeks massa tubuh (BMI) yang dirancang untuk membantu pengguna dalam memantau tekanan darah dan 
 BMI mereka secara berkala.
 
 
-2. Fitur Program
-- Input Data Tekanan Darah: Pengguna dapat memasukkan data tekanan darah mereka (sistolik dan diastolik) secara manual.
-- Perhitungan BMI: Program ini dapat menghitung BMI berdasarkan berat badan dan tinggi badan yang dimasukan oleh pengguna.
-- Indikasi Penyakit Tekanan Darah: Program ini akan memberikan indikasi apakah tekanan darah pengguna termasuk **normal**, **hipertensi**, atau **hipotensi** yang di sesuaikan dengan data pengguna *Umur, Jenis Kelamin, BMI.* Berdasarkan standar medis terkini.
-- Riwayat Data: Program ini dapat menyimpan riwayat data dari pengguna untuk analisis berkelanjutan *Apabila program dihentikan data akan hilang*.
-- Notifikasi : Program ini dapat memberikan notifikasi kepada pengguna saat terindikasi tekanan darah tidak normal.
-- Saran Kesehatan: Program ini memberikan saran kesehatan berdasarkan hasil tekanan darah dan BMI pengguna dengan bantuan Gemini AI.
+## 2. Fitur Program
+* **Input Data Tekanan Darah:** Pengguna dapat memasukkan data tekanan darah mereka (*sistolik dan diastolik*) secara manual.
 
-3. Keunggulan Program
-- User-Friendly: Antarmuka yang mudah digunakan sehingga pengguna dari berbagai latar belakang dapat mengoperasikannya dengan mudah.
-- Monitoring Berkala: Memungkinkan pengguna untuk memantau tekanan darah dan BMI mereka secara berkala.
-- Indikasi Penyakit: Memberikan indikasi penyakit berdasarkan data tekanan darah dan BMI yang dimasukkan.
-- Data Riwayat: Menyimpan riwayat data untuk analisis jangka panjang.
-- Saran Kesehatan: Memberikan saran kesehatan yang relevan dari data pengguna dan berbasis AI.
+* **Perhitungan BMI:** 
+Program ini dapat menghitung BMI berdasarkan berat badan dan tinggi badan yang dimasukan oleh pengguna.
+
+* **Indikasi Penyakit Tekanan Darah:** Program ini akan memberikan indikasi apakah tekanan darah pengguna termasuk **normal**, **hipertensi**, atau **hipotensi** yang di sesuaikan dengan data pengguna *Umur, Jenis Kelamin, BMI.* Berdasarkan standar medis terkini.
+
+* **Riwayat Data:** Program ini dapat menyimpan riwayat data dari pengguna untuk analisis berkelanjutan 
+  > **Catatan:** Apabila program dihentikan data akan hilang (**Data tidak disimpan ke file**)
+
+* **Notifikasi:**  Program ini dapat memberikan notifikasi kepada pengguna saat terindikasi tekanan darah tidak normal.
+* **Saran Kesehatan:** Program ini memberikan saran kesehatan berdasarkan hasil tekanan darah dan BMI pengguna dengan bantuan Gemini AI.
+
+## 3. Keunggulan Program
+* **User-Friendly:**
+ Antarmuka yang mudah digunakan sehingga pengguna dari berbagai latar belakang dapat mengoperasikannya dengan mudah.
+* **Monitoring Berkala:** Memungkinkan pengguna untuk memantau tekanan darah dan BMI mereka secara berkala.
+
+* **Indikasi Penyakit:** Memberikan indikasi penyakit berdasarkan data tekanan darah dan BMI yang dimasukkan.
+
+* **Data Riwayat:** Menyimpan riwayat data untuk analisis jangka panjang.
+
+* **Saran Kesehatan:** Memberikan saran kesehatan yang relevan dari data pengguna dan berbasis AI.
+
+## 4. Kontributor
+| Nama | Jobdesk |
+| :--- | :--- |
+| **Said** | Pengembang Utama |
+| **Bryan** | Pengembang AI dan Saran Kesehatan |
+| **Putra** | Membantu pengembangan logika program |
+| **Onji** | Membuat presentasi penjelasan program |
+| **Tata** | Pembuatan Presentasi penjelasan program
+
+
+## 5. Daftar Pustaka
