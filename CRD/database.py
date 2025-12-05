@@ -17,12 +17,10 @@ def create(nama, bb, tb, umur, sistol, diastol):
     global dfPasien
     
     try:
-        diagnosa = klasifikasiTekanan(umur, sistol, diastol)
-        
-        tinggiMeter = tb / 100.0 
-        bmiHitung = bb / (tinggiMeter * tinggiMeter) 
+        diagnosa = klasifikasiTekanan(umur, sistol, diastol) 
+        bmiHitung = bb / ((tb / 100.0) ** 2)
         kategoriHasilBmi = klasifikasiBmi(bmiHitung) 
-        
+
         dataBaru = {
             'nama': nama,
             'beratBadan': bb,

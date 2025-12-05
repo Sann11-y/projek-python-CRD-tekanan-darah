@@ -14,7 +14,7 @@ try:
 except Exception as e:
     print(f"ERROR: Gagal inisialisasi klien Gemini. Pastikan API key sudah diatur. Detail: {e}")
     client = None
- 
+
 def main():
     CRD.inisialisasiData() 
     while True:
