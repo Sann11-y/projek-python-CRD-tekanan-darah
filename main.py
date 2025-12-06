@@ -37,26 +37,32 @@ def main():
             print("Data saat ini: Kosong")
         print("-" * 60)
 
-        pilihanUser = input("Pilih opsi: ")
+        while True:
+            try:
+                masukinOpsi = int(input("Pilih opsi: "))
+                if 1 <= masukinOpsi <= 5:
+                    break 
+                else:
+                    print("Gabisa, Masukin angka 1 sampai 5.")
+            except ValueError:
+                print("Gabisa, Harus Masukin Angka.")
 
-        if pilihanUser == "1":
+        if masukinOpsi == 1:
             CRD.buatData() 
-            input("Tekan Enter untuk lanjut...")
-        elif pilihanUser == "2":
+            input("\nTeken Enter untuk kembali ke menu...")
+        elif masukinOpsi == 2:
             CRD.lihatData() 
-            input("Tekan Enter untuk lanjut...")
-        elif pilihanUser == "3":
+            input("\nTeken Enter untuk kembali ke menu...")
+        elif masukinOpsi == 3:
             CRD.analisisData(client)
-            input("Tekan Enter untuk lanjut...")
-        elif pilihanUser == "4":
+            input("\nTeken Enter untuk kembali ke menu...")
+        elif masukinOpsi == 4:
             CRD.hapusData() 
-        elif pilihanUser == "5":
+            input("\nTeken Enter untuk kembali ke menu...")
+        elif masukinOpsi == 5:
             print("\nTerima kasih! Program selesai.")
             print("Catatan: Semua data akan hilang karena disimpan di memory saja.")
             break
-        else:
-            print("Opsi tidak valid!")
-            input("Tekan Enter untuk lanjut...")
 
 if __name__ == "__main__":
     main()
