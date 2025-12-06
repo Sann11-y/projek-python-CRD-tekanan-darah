@@ -17,9 +17,7 @@ def create(nama, bb, tb, umur, sistol, diastol):
     global dfPasien
     
     try:
-        diagnosa = klasifikasiTekanan(umur, sistol, diastol) 
-        bmiHitung = bb / ((tb / 100.0) ** 2)
-        kategoriHasilBmi = klasifikasiBmi(bmiHitung) 
+        hitungBMI = bb / ((tb / 100) ** 2)
 
         dataBaru = {
             'nama': nama,
@@ -28,9 +26,9 @@ def create(nama, bb, tb, umur, sistol, diastol):
             'umur': umur,
             'sistol': sistol,
             'diastol': diastol,
-            'diagnosa': diagnosa,
-            'bmi': round(bmiHitung, 2), 
-            'kategoriBmi': kategoriHasilBmi, 
+            'diagnosa': klasifikasiTekanan(umur, sistol, diastol),
+            'bmi': hitungBMI, 
+            'kategoriBmi': klasifikasiBmi(hitungBMI), 
             'saranGemini': "" 
         }
         dfPasien.append(dataBaru)

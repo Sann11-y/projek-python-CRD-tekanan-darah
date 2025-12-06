@@ -20,15 +20,17 @@ def main():
     while True:
         os.system('cls' if sistemOperasi == 'nt' else 'clear')
         
-        print("-" * 60)
-        print("SISTEM MONITORING KESEHATAN TEKANAN DARAH & BMI".center(60))
-        print("-" * 60)
-        print("1. Buat Data Pasien Baru")
-        print("2. Lihat Data Pasien") 
-        print("3. Analisis Kesehatan Pasien dengan Gemini AI") 
-        print("4. Hapus Data Pasien")
-        print("5. Keluar")
-        print("-" * 60)
+        print(
+            "-" * 60 + "\n" +
+            "SISTEM MONITORING KESEHATAN TEKANAN DARAH & BMI".center(60) + "\n" +
+            "-" * 60 + "\n" +
+            "1. Buat Data Pasien Baru\n" +
+            "2. Lihat Data Pasien\n" +
+            "3. Analisis Kesehatan Pasien dengan Gemini AI\n" +
+            "4. Hapus Data Pasien\n" +
+            "5. Keluar\n" +
+            "-" * 60
+        )
         
         listPasien = CRD.database.read()
         if len(listPasien) > 0:
@@ -60,8 +62,10 @@ def main():
             CRD.hapusData() 
             input("\nTeken Enter untuk kembali ke menu...")
         elif masukinOpsi == 5:
-            print("\nTerima kasih! Program selesai.")
-            print("Catatan: Semua data akan hilang karena disimpan di memory saja.")
+            print(
+                "\nTerima kasih! Program selesai.\n"+
+                "Catatan: Semua data akan hilang karena disimpan di memory saja."
+            )
             break
 
 if __name__ == "__main__":
