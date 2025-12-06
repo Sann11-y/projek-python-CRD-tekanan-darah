@@ -101,11 +101,11 @@ def buatData():
             bb = float(input("Berat Badan (kg)\t: "))
             tb = float(input("Tinggi Badan (cm)\t: "))
             if bb <= 0 or tb <= 0:
-                print("Error: Semua nilai harus positif!")
+                print("Berat badan dan tinggi badan harus positif!")
                 continue
             break
         except ValueError:
-            print("Error: Input harus angka!")
+            print("Input harus angka!")
 
     while True:
         try:
@@ -119,29 +119,23 @@ def buatData():
             else:
                 break
         except ValueError: 
-            print("Error: Input harus angka!")
+            print("Input harus angka!")
 
     while True:
         try:
             sistol = int(input("Tekanan Darah (Systolic): "))
             diastol = int(input("Tekanan Darah(Diastolic): "))
 
-            if sistol <= 0 or diastol <= 0:
-                print("Error: Semua nilai harus positif!")
+            if sistol <= 0 or diastol <= 0 or sistol < 50 or diastol < 30 or sistol > 300 or diastol > 200:
+                print("Nilai tekanan darah tidak masuk akal!")
                 continue
-            elif sistol < diastol:
-                print("Error: Systolic harus lebih besar dari Diastolic!")
-                continue
-            elif sistol == diastol:
-                print("Error: Systolic dan Diastolic tidak boleh sama!")
-                continue
-            elif sistol < 50 or diastol < 30 or sistol > 300 or diastol > 200:
-                print("Error: Tekanan darah terlalu ekstrem!")
+            elif sistol <= diastol: 
+                print("Tekanan sistolik harus lebih besar dari diastolik!")
                 continue
             else:
-                break 
+                break
         except ValueError:
-            print("Error: Input harus angka!")
+            print("Input harus angka!")
     
     if database.create(nama, bb, tb, umur, sistol, diastol):
         print(

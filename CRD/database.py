@@ -43,13 +43,12 @@ Jika indeks diberikan, kembalikan data pasien tunggal sebagai dict.
 Jika tidak, kembalikan seluruh list.
 '''
 def read(indeks=None):
-    if indeks is not None:
-        # Cek apakah indeks valid
-        if 0 <= indeks < len(dfPasien):
-            return dfPasien[indeks] 
-        return None
-    # Kembalikan seluruh data jika indeks tidak diberikan
-    return dfPasien
+    if indeks is None:
+        return dfPasien 
+    if 0 <= indeks < len(dfPasien):
+        return dfPasien[indeks] 
+    else:
+        return None # Mengembalikan None jika indeks di luar batas
 
 '''
 Menghapus data pasien dari list berdasarkan indeks (Operasi DELETE).

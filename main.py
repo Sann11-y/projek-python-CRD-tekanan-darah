@@ -43,9 +43,8 @@ def main():
             try:
                 masukinOpsi = int(input("Pilih opsi: "))
                 if 1 <= masukinOpsi <= 5:
-                    break 
-                else:
-                    print("Gabisa, Masukin angka 1 sampai 5.")
+                    break         
+                print("Gabisa, Masukin angka 1 sampai 5.")
             except ValueError:
                 print("Gabisa, Harus Masukin Angka.")
 
