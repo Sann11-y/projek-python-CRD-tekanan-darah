@@ -57,6 +57,7 @@ def rekomendasiKesehatan (client: genai.Client , userInput: str) -> str:
     Memberikan rekomendasi kesehatan atau saran berdasarkan input pengguna
     menggunakan model Gemini. (Dipindahkan dari main.py)
     """
+    # kegunaan systemprompt untuk memberi tau ai apa perannya dalam program ini (pemberi analisis dan saran kesehatan )
     systemPrompt = """
     Anda adalah asisten informasi kesehatan yang sangat ringkas dan berhati-hati.
     Tugas Anda adalah:

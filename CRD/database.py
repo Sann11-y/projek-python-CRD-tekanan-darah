@@ -67,6 +67,8 @@ def delete(indeks):
 '''
 Mengupdate kolom 'saranGemini' untuk pasien tertentu berdasarkan indeks (Operasi UPDATE).
 '''
+# penyimpanan saran daru ai dalam memori dan diupdate ke dfpasien sehingga data dapat dibaca lagi di opsi menu 2 atau opsi menu 3 tanpa harus analisis ulang
+#  selagi program tetap berjalan
 def updateSaran(indeks, saranText):
     global dfPasien
     try:
