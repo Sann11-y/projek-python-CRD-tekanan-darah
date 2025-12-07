@@ -71,15 +71,15 @@ def rekomendasiKesehatan (client: genai.Client , userInput: str) -> str:
     print(f'Memproses data dengan Gemini...')
     try:
         config = types.GenerateContentConfig(
-            system_instruction=systemPrompt
+            system_instruction=systemPrompt #menggunakan sistem instruction yang sudah dibuat untuk mengatur peran model gemini
         )
 
         response = client.models.generate_content(
             model='gemini-2.5-flash',
-            contents = userInput,
-            config=config
-        )
-        return response.text
+            contents = userInput, #data pasien yang sudah terstruktur dibuat menjadi prompt dan diteruskan ke model gemini
+            config=config #menerapkan konfigurasi termasuk instruksi sistem
+        ) # response ini adalah kode yang berfungsi memanggil api gemini untuk menghasilkan konten
+        return response.text #jika berhasil program akan mengembalikan semua respon teks gemini ke 'response.text' yang berisi analisis dan saran kesehatan
 
     except Exception as e:
         print(f'APi EROR: Gagal mendapat respon dari gemini. \n Detail: {e}')
