@@ -1,5 +1,6 @@
 # Sistem monitoring tekanan darah darah dan BMI 
 
+![LOGO](images/Vitalize.png)
 ## Daftar Isi
 * [1. Penjelasan Program ](#1-penjelasan-program)
 * [2. Fitur Program ](#2-fitur-program)
