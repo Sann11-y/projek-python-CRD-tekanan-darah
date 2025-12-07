@@ -1,4 +1,4 @@
-# Sistem monitoring tekanan darah darah dan BMI 
+# Vitalize| Sistem Analisis Tekanan Darah dan BMI 
 
 ![LOGO](images/Vitalize.png)
 ## Daftar Isi
