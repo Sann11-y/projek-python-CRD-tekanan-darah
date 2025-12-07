@@ -1,5 +1,5 @@
 from google import genai
-from google.genai import types
+from google.genai import types #memberi instruksi peran ai dalam program sehingga tidak keluar dari konetks program yang berjalan
 
 from . import database 
 
@@ -199,18 +199,19 @@ def analisisData(geminiClient):
     
     while True:
         try:
-            nomorData = int(input("\nPilih nomor data untuk dianalisis: ")) - 1
+            nomorData = int(input("\nPilih nomor data untuk dianalisis: ")) - 1 # memilih data yang sudah ada, data -1 karena indeks data dimulai dari 0
             dataPasien = database.read(nomorData)
             
-            if dataPasien is not None:
+            if dataPasien is not None: #memeriksa apakah indeks valid atau data ada, dan apabila valid maka program lanjut
                 break
-            else:
+            else: # akan menampilkan nomor tidak valid ketika indeks tidak valid atau data tidak ada
                 print("Nomor tidak valid!")
         except ValueError:
             print("Input harus angka!")
     
-    saranGemini = dataPasien.get('saranGemini')
-    saranBaruDibuat = False
+    saranGemini = dataPasien.get('saranGemini') #ngambil data yang baru aja dipilih (apabila data sudah pernah dianalisis gemini, maka akan menampilkan saran gemini.) 
+    # jika belum maka akan kosong
+    saranBaruDibuat = False # false apabila saran sudah ada, dan menajadi true jika program harus bikin saran baru yang nanti bakal disimpan di database
 
     # JIKA SARAN BELUM ADA, MAKA PANGGIL GEMINI UNTUK MEMBUAT SARAN
     if not saranGemini and geminiClient is not None:
