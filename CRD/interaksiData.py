@@ -50,12 +50,12 @@ def klasifikasiTekanan(umur, sistol, diastol):
 
 '''
 Fungsi Rekomendasi Kesehatan dengan Gemini AI
-Menghasilkan rekomendasi kesehatan berdasarkan data pasien menggunakan model Gemini.
+Memberikan saran kesehatan berdasarkan data pasien menggunakan model Gemini.
 '''
 def rekomendasiKesehatan (client: genai.Client , userInput: str) -> str:
     """
     Memberikan rekomendasi kesehatan atau saran berdasarkan input pengguna
-    menggunakan model Gemini. (Dipindahkan dari main.py)
+    menggunakan model Gemini
     """
     # kegunaan systemprompt untuk memberi tau ai apa perannya dalam program ini (pemberi analisis dan saran kesehatan )
     systemPrompt = """
@@ -81,7 +81,7 @@ def rekomendasiKesehatan (client: genai.Client , userInput: str) -> str:
         ) # response ini adalah kode yang berfungsi memanggil api gemini untuk menghasilkan konten
         return response.text #jika berhasil program akan mengembalikan semua respon teks gemini ke 'response.text' yang berisi analisis dan saran kesehatan
 
-    except Exception as e:
+    except Exception as e: 
         print(f'APi EROR: Gagal mendapat respon dari gemini. \n Detail: {e}')
         return 'Maaf terjadi masalah teknis saat memproses permintaan Anda.'
 
@@ -106,7 +106,7 @@ def buatData():
                 continue
             break
         except ValueError:
-            print("Input harus angka!")
+            print("Input harus berupa angka!")
 
     while True:
         try:
@@ -234,7 +234,7 @@ def analisisData(geminiClient):
             "="*60
         )
         responseText = rekomendasiKesehatan(geminiClient, promptInput)
-        saranGemini = responseText
+        saranGemini = responseText #output respon gemini disimpan di variabel saranGemini
         saranBaruDibuat = True
 
     elif not saranGemini and geminiClient is None:
@@ -301,7 +301,7 @@ def hapusData():
         f"Tekanan Darah\t\t: {int(dataPasien['sistol'])}/{int(dataPasien['diastol'])} mmHg"
         )
     
-    konfirmasi = input("\nApakah Anda yakin? (y/n): ").lower()
+    konfirmasi = input("\nApakah Anda yakin ingin menghapus data ini? (y/n): ").lower()
     if konfirmasi == 'y':
         if database.delete(nomorData):
             print(
