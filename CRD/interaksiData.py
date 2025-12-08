@@ -310,5 +310,7 @@ def hapusData():
                 )
         else:
             print("Gagal menghapus data!")
+    elif konfirmasi == 'n':
+        print("Penghapusan dibatalkan.")                
     else:
-        print("Penghapusan dibatalkan.")
+        print("silahkan masukan 'y' atau 'n' saja tanpa spasi!")
