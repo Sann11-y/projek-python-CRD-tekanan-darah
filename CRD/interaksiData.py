@@ -216,18 +216,11 @@ def analisisData(geminiClient):
     # JIKA SARAN BELUM ADA, MAKA PANGGIL GEMINI UNTUK MEMBUAT SARAN
     if not saranGemini and geminiClient is not None:
         
-        nama = dataPasien['nama']
-        sistolik = dataPasien['sistol']
-        diastolik = dataPasien['diastol']
-        bmi = dataPasien['bmi']
-        berat = dataPasien['beratBadan']
-        tinggi = dataPasien['tinggiBadan']
-        
         detailPasien = (
-            f"Nama: {nama}\n"
-            f"Tekanan Darah: {sistolik}/{diastolik} mmHg\n"
-            f"BMI: {bmi:.1f}\n"
-            f"Berat: {berat} kg, Tinggi: {tinggi} cm"
+            f"Nama: {dataPasien['nama']}\n"
+            f"Tekanan Darah: {dataPasien['sistol']}/{dataPasien['diastol']} mmHg\n"
+            f"BMI: {dataPasien['bmi']:.1f}\n"
+            f"Berat: {dataPasien['beratBadan']:.1f} kg, Tinggi: {dataPasien['tinggiBadan']:.1f} cm"
         )
 
         promptInput = (
@@ -237,7 +230,7 @@ def analisisData(geminiClient):
         )
         print(
             "\n"+"="*60+"\n"+
-            "MENGANALISIS DATA PASIEN DENGAN GEMINI AI".center(60) + "\n" +
+            "Menganalisis data pasien dengan Gemini AI".center(60) + "\n" +
             "="*60
         )
         responseText = rekomendasiKesehatan(geminiClient, promptInput)
@@ -271,9 +264,9 @@ def analisisData(geminiClient):
     if saranBaruDibuat and geminiClient is not None:
         print("\n"+"--- PROSES PENYIMPANAN DATA ---".center(60))
         if database.updateSaran(nomorData, saranGemini):
-            print("✅ Saran Gemini baru telah disimpan otomatis ke database.")
+            print("Saran baru telah disimpan ke database".center(60))
         else:
-            print("❌ Gagal menyimpan saran baru ke database.")
+            print("Gagal menyimpan saran ke database".center(60))
         print("-"*60)
 '''
 Hapus Data Pasien (DELETE)
