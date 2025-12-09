@@ -128,6 +128,12 @@ def buatData():
             elif sistol <= diastol: 
                 print("Tekanan sistolik harus lebih besar dari diastolik!")
                 continue
+            elif sistol -diastol>=60:
+                print("ini adalah wide pulse pressure, di luar konteks program!")
+                continue
+            elif sistol-diastol<30:
+                print("ini adalah narrow pulse pressure, di luar konteks program!")
+                continue
             else:
                 break
         except ValueError:
