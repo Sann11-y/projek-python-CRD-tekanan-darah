@@ -1,5 +1,5 @@
 from google import genai
-from google.genai import types #memberi instruksi peran ai dalam program sehingga tidak keluar dari konetks program yang berjalan
+from google.genai import types #memberi instruksi peran ai dalam program sehingga tidak keluar dari konteks program yang berjalan
 
 from . import database 
 

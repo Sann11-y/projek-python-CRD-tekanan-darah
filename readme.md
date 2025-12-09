@@ -73,4 +73,7 @@ Program ini dapat menghitung BMI berdasarkan berat badan dan tinggi badan yang d
 
 5. **Kalkulator BMI**
     [ Panduan perhitungan BMI ](https://www.worldobesity.org/about/about-obesity/obesity-classification)
+
+6. **Refrensi Penggunaan Gemini API**
+    [ Dokumentasi Gemini API](https://youtu.be/S1kjapKSuPs?si=9H46zc7j34SaSLCU)    
        
