@@ -16,6 +16,11 @@ except Exception as e:
     client = None
 
 def main():
+    '''
+    Fungsi Utama Program
+    Fungsi ini adalah fungsi utama program yang akan dijalankan ketika program dijalankan.
+    Fungsi ini akan memanggil fungsi-fungsi lainnya untuk menjalankan operasi program.
+    '''
     CRD.inisialisasiData() 
     while True:
         os.system('cls' if sistemOperasi == 'nt' else 'clear')
@@ -32,7 +37,7 @@ def main():
             "-" * 60
         )
         
-        listPasien = CRD.database.read()
+        listPasien = CRD.read()
         if len(listPasien) > 0:
             print(f"Data saat ini: {len(listPasien)} pasien")
         else:

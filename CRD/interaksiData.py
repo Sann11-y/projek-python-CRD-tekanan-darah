@@ -50,13 +50,8 @@ def klasifikasiTekanan(umur, sistol, diastol):
 
 '''
 Fungsi Rekomendasi Kesehatan dengan Gemini AI
-Memberikan saran kesehatan berdasarkan data pasien menggunakan model Gemini.
 '''
 def rekomendasiKesehatan (client: genai.Client , userInput: str) -> str:
-    """
-    Memberikan rekomendasi kesehatan atau saran berdasarkan input pengguna
-    menggunakan model Gemini
-    """
     # kegunaan systemprompt untuk memberi tau ai apa perannya dalam program ini (pemberi analisis dan saran kesehatan )
     systemPrompt = """
     Anda adalah asisten informasi kesehatan yang sangat ringkas dan berhati-hati.
