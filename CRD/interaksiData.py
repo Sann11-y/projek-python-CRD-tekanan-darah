@@ -122,7 +122,7 @@ def buatData():
             sistol = int(input("Tekanan Darah (Systolic): "))
             diastol = int(input("Tekanan Darah(Diastolic): "))
 
-            if sistol <= 0 or diastol <= 0 or sistol < 50 or diastol < 30 or sistol > 300 or diastol > 200:
+            if sistol < 50 or diastol < 30 or sistol > 300 or diastol > 200:
                 print("Nilai tekanan darah tidak masuk akal!")
                 continue
             elif sistol <= diastol: 

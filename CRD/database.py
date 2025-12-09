@@ -47,17 +47,6 @@ def read(indeks=None):
         return False
 
 '''
-Menghapus data pasien dari list berdasarkan indeks (Operasi DELETE).
-'''
-def delete(indeks):
-    global dfPasien
-    if 0 <= indeks < len(dfPasien):
-        dfPasien.pop(indeks)
-        return True
-    else:
-        return False
-
-'''
 Mengupdate kolom 'saranGemini' untuk pasien tertentu berdasarkan indeks (Operasi UPDATE).
 '''
 # penyimpanan saran daru ai dalam memori dan diupdate ke dfpasien sehingga data dapat dibaca lagi di opsi menu 2 atau opsi menu 3 tanpa harus analisis ulang
@@ -69,3 +58,15 @@ def updateSaran(indeks, saranText):
         return True
     else:
         return False
+    
+'''
+Menghapus data pasien dari list berdasarkan indeks (Operasi DELETE).
+'''
+def delete(indeks):
+    global dfPasien
+    if 0 <= indeks < len(dfPasien):
+        dfPasien.pop(indeks)
+        return True
+    else:
+        return False
+

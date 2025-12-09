@@ -1,19 +1,16 @@
-import os
-import CRD
-import dotenv
-from google import genai
+import os # buat operasi sistem seperti membersihkan layar terminal
+import CRD 
+import dotenv #pastiin library dotenv sudah terinstal
+from google import genai #pastiin library google-genai sudah terinstal
 
-'''Deteksi Sistem Operasi
-Mendeteksi sistem operasi untuk penentuan platform pengguna.
-'''
-sistemOperasi = os.name
+sistemOperasi = os.name # 'nt' untuk Windows, 'posix' untuk Linux/Mac
 
-dotenv.load_dotenv("GeminiApi.env")
+dotenv.load_dotenv("GeminiApi.env") #memuat file GeminiApi.env yang berisi API key Gemini
 try:
-    client = genai.Client()
+    client = genai.Client() #inisialisasi klien Gemini
 except Exception as e:
     print(f"ERROR: Gagal inisialisasi klien Gemini. Pastikan API key sudah diatur. Detail: {e}")
-    client = None
+    client = None # Tetep lanjutkan meskipun klien gagal diinisialisasi
 
 def main():
     '''
@@ -23,10 +20,11 @@ def main():
     '''
     CRD.inisialisasiData() 
     while True:
-        os.system('cls' if sistemOperasi == 'nt' else 'clear')
+        os.system('cls' if sistemOperasi == 'nt' else 'clear') # kalau Windows pakai 'cls', kalau Linux/Mac pakai 'clear'
         
         print(
             "-" * 60 + "\n" +
+            "VITALALIZE".center(60) + "\n" +
             "SISTEM MONITORING KESEHATAN TEKANAN DARAH & BMI".center(60) + "\n" +
             "-" * 60 + "\n" +
             "1. Buat Data Pasien Baru\n" +
@@ -49,9 +47,10 @@ def main():
                 masukinOpsi = int(input("Pilih opsi: "))
                 if 1 <= masukinOpsi <= 5:
                     break         
-                print("Gabisa, Masukin angka 1 sampai 5.")
+                else:
+                    print("Tidak Bisa, Masukin angka 1 sampai 5.")
             except ValueError:
-                print("Gabisa, Harus Masukin Angka.")
+                print("Tidak Bisa, Harus Masukin Angka.")
 
         if masukinOpsi == 1:
             CRD.buatData() 
