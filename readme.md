@@ -65,15 +65,9 @@ Program ini dapat menghitung BMI berdasarkan berat badan dan tinggi badan yang d
 2. **Klasifikasi Risiko - Pulse Pressure**
     [Klasifikasi risiko *Pulse pressure* dan *Wide pressure*](https://www.ncbi.nlm.nih.gov/books/NBK482408/)
 
-3. **Klasifikasi Risiko - Hipertensi**
-    [ Klasifikasi risiko *Hipertensi* ](http://repo.poltekkestasikmalaya.ac.id/1582/1/1.%20Buku%20Kenali%20Hipertensi_fix%20cetak_compressed_compressed_compressed%281%29.pdf)
-
-4. **Klasifikasi Risiko - Hipotensi**
-    [ Klasifikasi risiko *Hipotensi* ](https://journals2.ums.ac.id/bik/article/view/9785/3149)
-
-5. **Kalkulator BMI**
+3. **Kalkulator BMI**
     [ Panduan perhitungan BMI ](https://www.worldobesity.org/about/about-obesity/obesity-classification)
 
-6. **Refrensi Penggunaan Gemini API**
-    [ Dokumentasi Gemini API](https://youtu.be/S1kjapKSuPs?si=9H46zc7j34SaSLCU)    
+4. **Refrensi Penggunaan Gemini API**
+    [ Dokumentasi Gemini API](https://youtu.be/qfWpPEgea2A?si=6LgcG9Xo4oJ2MMGz)    
        

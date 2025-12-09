@@ -201,7 +201,7 @@ def analisisData(geminiClient):
             nomorData = int(input("\nPilih nomor data untuk dianalisis: ")) - 1 # memilih data yang sudah ada, data -1 karena indeks data dimulai dari 0
             dataPasien = database.read(nomorData)
             
-            if dataPasien is not None: #memeriksa apakah indeks valid atau data ada, dan apabila valid maka program lanjut
+            if dataPasien:# jika data ada maka akan melanjutkan ke tahap selanjutnya
                 break
             else: # akan menampilkan nomor tidak valid ketika indeks tidak valid atau data tidak ada
                 print("Nomor tidak valid!")
