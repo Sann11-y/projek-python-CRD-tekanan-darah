@@ -55,7 +55,7 @@ Program ini dapat menghitung BMI berdasarkan berat badan dan tinggi badan yang d
 | **Bryan** | Pengembang AI dan Saran Kesehatan |
 | **Putra** | Membantu pengembangan logika program |
 | **Onji** | Membuat presentasi penjelasan program |
-| **Tata** | Pembuatan Presentasi penjelasan program
+| **Tata** | Pembuatan algoritma program |
 
 
 ## 5. Referensi dan Sumber
