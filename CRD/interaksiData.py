@@ -144,8 +144,6 @@ def buatData():
             "\nData berhasil ditambahkan!\n"+
             f"Total data sekarang: {len(database.read())} pasien"
         )
-    else:
-        print("\nGagal menambah data!")
 
 '''
 Tampilkan Semua Data Pasien (READ)
@@ -170,7 +168,7 @@ def lihatData():
         bb = f"{baris['beratBadan']:.1f}"
         tb = f"{baris['tinggiBadan']:.1f}"
         bmi = f"{baris['bmi']:.1f}"
-        umur = str(int(baris['umur']))
+        umur = int(baris['umur'])
         tekananDarah = f"{int(baris['sistol'])}/{int(baris['diastol'])} mmHg"
         diagnosa = baris['diagnosa'][:12]
         kategoriBmi = baris['kategoriBmi'][:12]
@@ -284,7 +282,7 @@ def hapusData():
         try:
             nomorData = int(input("\nPilih nomor data yang akan dihapus: ")) - 1
             dataPasien = database.read(nomorData)
-            if dataPasien is not None:
+            if dataPasien:
                 break
             else:
                 print("Nomor tidak valid!")
