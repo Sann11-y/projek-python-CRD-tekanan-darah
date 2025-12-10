@@ -240,6 +240,31 @@ def analisisData(geminiClient):  # gemini client sebagai argumen fungsi
 
     elif not saranGemini and geminiClient is None:
         print("\nGemini API gagal diinisialisasi. Tidak bisa membuat saran fleksibel.")
+    #kalau
+    if not saranGemini:#jika saran gemini kosong
+        if geminiClient is None:#jika geminiClient belum diinisialisasi
+            print("\nGemini API gagal diinisialisasi. Tidak bisa membuat saran fleksibel.")
+        else:#jika geminiClient sudah diinisialisasi
+            detailPasien = (
+                f"Nama: {dataPasien['nama']}\n"
+                f"Tekanan Darah: {dataPasien['sistol']}/{dataPasien['diastol']} mmHg\n"
+                f"BMI: {dataPasien['bmi']:.1f}\n"
+                f"Berat: {dataPasien['beratBadan']:.1f} kg, Tinggi: {dataPasien['tinggiBadan']:.1f} cm"
+            )
+
+            promptInput = (
+                f"Data Pasien:\n"
+                f"{detailPasien}\n"
+                f"Berdasarkan data di atas, berikan analisis singkat dan TEPAT 3 saran kesehatan."
+            )
+            print(
+                "\n"+"="*60+"\n"+
+                "Menganalisis data pasien dengan Gemini AI".center(60) + "\n" +
+                "="*60
+            )
+            responseText = rekomendasiKesehatan(geminiClient, promptInput)
+            saranGemini = responseText #output respon gemini disimpan di variabel saranGemini
+            saranBaruDibuat = True
     
     print(
         "\n" + "="*60 + "\n" +
