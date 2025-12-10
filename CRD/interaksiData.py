@@ -213,34 +213,6 @@ def analisisData(geminiClient):  # gemini client sebagai argumen fungsi
     # jika belum maka akan kosong
     saranBaruDibuat = False # false apabila saran sudah ada, dan menajadi true jika program harus bikin saran baru yang nanti bakal disimpan di database
 
-    # JIKA SARAN BELUM ADA, MAKA PANGGIL GEMINI UNTUK MEMBUAT SARAN
-    if not saranGemini and geminiClient is not None:
-        #pengecekan saran gemini kosong dan gemini client berhasil diinisialisasi
-        
-        detailPasien = ( #pembuatan prompt terstruktur dari data pasien
-            f"Nama: {dataPasien['nama']}\n"
-            f"Tekanan Darah: {dataPasien['sistol']}/{dataPasien['diastol']} mmHg\n"
-            f"BMI: {dataPasien['bmi']:.1f}\n"
-            f"Berat: {dataPasien['beratBadan']:.1f} kg, Tinggi: {dataPasien['tinggiBadan']:.1f} cm"
-        )
-
-        promptInput = (
-            f"Data Pasien:\n"
-            f"{detailPasien}\n"
-            f"Berdasarkan data di atas, berikan analisis singkat dan TEPAT 3 saran kesehatan."
-        )
-        print(
-            "\n"+"="*60+"\n"+
-            "Menganalisis data pasien dengan Gemini AI".center(60) + "\n" +
-            "="*60
-        )
-        responseText = rekomendasiKesehatan(geminiClient, promptInput) #Api call
-        saranGemini = responseText #output respon gemini disimpan di variabel saranGemini
-        saranBaruDibuat = True
-
-    elif not saranGemini and geminiClient is None:
-        print("\nGemini API gagal diinisialisasi. Tidak bisa membuat saran fleksibel.")
-    #kalau
     if not saranGemini:#jika saran gemini kosong
         if geminiClient is None:#jika geminiClient belum diinisialisasi
             print("\nGemini API gagal diinisialisasi. Tidak bisa membuat saran fleksibel.")
