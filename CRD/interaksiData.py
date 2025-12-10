@@ -188,7 +188,7 @@ def lihatData():
 '''
 Analisis Kesehatan & Integrasi Panggilan Gemini (ANALYZE)
 '''
-def analisisData(geminiClient):
+def analisisData(geminiClient):  # gemini client sebagai argumen fungsi
     listPasien = database.read()
     if len(listPasien) == 0:
         print("\nTidak ada data pasien!")
@@ -208,14 +208,16 @@ def analisisData(geminiClient):
         except ValueError:
             print("Input harus angka!")
     
-    saranGemini = dataPasien.get('saranGemini') #ngambil data yang baru aja dipilih (apabila data sudah pernah dianalisis gemini, maka akan menampilkan saran gemini.) 
+    saranGemini = dataPasien.get('saranGemini') #ngambil data yang baru aja dipilih 
+    #(apabila data sudah pernah dianalisis gemini, maka akan menampilkan saran gemini.) 
     # jika belum maka akan kosong
     saranBaruDibuat = False # false apabila saran sudah ada, dan menajadi true jika program harus bikin saran baru yang nanti bakal disimpan di database
 
     # JIKA SARAN BELUM ADA, MAKA PANGGIL GEMINI UNTUK MEMBUAT SARAN
     if not saranGemini and geminiClient is not None:
+        #pengecekan saran gemini kosong dan gemini client berhasil diinisialisasi
         
-        detailPasien = (
+        detailPasien = ( #pembuatan prompt terstruktur dari data pasien
             f"Nama: {dataPasien['nama']}\n"
             f"Tekanan Darah: {dataPasien['sistol']}/{dataPasien['diastol']} mmHg\n"
             f"BMI: {dataPasien['bmi']:.1f}\n"
@@ -232,7 +234,7 @@ def analisisData(geminiClient):
             "Menganalisis data pasien dengan Gemini AI".center(60) + "\n" +
             "="*60
         )
-        responseText = rekomendasiKesehatan(geminiClient, promptInput)
+        responseText = rekomendasiKesehatan(geminiClient, promptInput) #Api call
         saranGemini = responseText #output respon gemini disimpan di variabel saranGemini
         saranBaruDibuat = True
 
