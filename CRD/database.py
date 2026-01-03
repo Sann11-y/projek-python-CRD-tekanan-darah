@@ -41,7 +41,7 @@ Jika tidak, kembalikan seluruh list.
 def read(indeks=None):
     if indeks is None:
         return dfPasien 
-    if 0 <= indeks < len(dfPasien):
+    elif 0 <= indeks < len(dfPasien):
         return dfPasien[indeks] 
     else:
         return False
