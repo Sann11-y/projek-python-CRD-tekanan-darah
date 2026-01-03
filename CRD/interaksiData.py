@@ -68,7 +68,7 @@ def rekomendasiKesehatan (client: genai.Client , userInput: str) -> str:
         config = types.GenerateContentConfig(
             system_instruction=systemPrompt #menggunakan sistem instruction yang sudah dibuat untuk mengatur peran model gemini
         )
-
+        #API Call
         response = client.models.generate_content(
             model='gemini-2.5-flash',
             contents = userInput, #data pasien yang sudah terstruktur dibuat menjadi prompt dan diteruskan ke model gemini
